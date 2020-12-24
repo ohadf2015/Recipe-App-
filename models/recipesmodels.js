@@ -23,3 +23,7 @@ const recipeSchema = new mongoose.Schema({
     worstRating: Number
 });
 module.exports = mongoose.model('recipe', recipeSchema);
+
+
+
+
