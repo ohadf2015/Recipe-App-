@@ -1,19 +1,29 @@
 const mongoose = require('mongoose');
 const recipeSchema = new mongoose.Schema({
     name: String,
-    slug: String,
-    desc: { type: String, required: [true, 'Please Enter Desc'], trim: true },
-    location: {
-        tp: { type: String, enum: ['Point'], required: true },
-        coordinates: { type: [Number], required: true },
-        //index: '2dsphere',
-        formatAddress: String,
-        street: String,
-        city: String,
-        state: String,
-        zipcode: String,
-        country: String
-
-    }
+    ratingData: Object,
+    datePublished:Date,
+    description:String,
+    recipeYield: String,
+    recipeIngredient: Object,
+    recipeInstructions: Object,
+    recipeCategory: Object,
+    nutrition: Object,
+    category: String,
+    Tatcategory:String,
+    RecId: Number,
+    link:String,
+    rating: Number,
+    img:String,
+    prepTimeVal:Number,
+    cookTimeval: Number,
+    totalTimeVal:Number,
+    ratingCount: Number,
+    bestRating: Number,
+    worstRating: Number
 });
 module.exports = mongoose.model('recipe', recipeSchema);
+
+
+
+
