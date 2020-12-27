@@ -6,19 +6,19 @@ const sendmsg = require('../utils/sendMessage');
 // #route GET api/auth/register
 exports.register = async(req, res, next) => {
     try {
-        const { name, email, password, level } = req.body;
+        const { fullname, email, password } = req.body;
         //create new user
         const user = await usermodel.create({
-            name,
+            fullname,
             email,
-            password,
-            level
+            password
         });
         //const token = user.getSignedJwtToken();
         // res.status(200).json({ success: true, token });
         sendTokenRes(user, 200, res);
 
     } catch (err) {
+        console.log(err);
         res.status(400).json({ success: false, error: err.message });
 
     }
@@ -27,6 +27,7 @@ exports.register = async(req, res, next) => {
 exports.login = async(req, res, next) => {
     try {
         const { email, password } = req.body;
+        console.log(req.body);
         if (!email || !password) {
             return next(new errorResponse('one of field not valid!', 400));
         }
@@ -61,6 +62,7 @@ const sendTokenRes = (user, status, res) => {
     }
     res.status(status).cookie('token', token, opts).json({
         success: true,
+        userid: '11',
         token
     })
 }
