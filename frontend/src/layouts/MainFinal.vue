@@ -1,0 +1,160 @@
+<template>
+<!-- view code resp on how to layout Shown -->
+  <q-layout view="lHh LpR lfr">
+<!-- Header -->
+<div class="auto-style">
+    <q-header class="header" elevated>
+      <q-toolbar class="bg-black">
+        <q-toolbar-title class="text-orange">
+          <strong>S</strong>pot <br><strong>Y</strong>our <br><strong>R</strong>ecipes
+        </q-toolbar-title>
+<!-- Search - available in search component -->
+        <div class="row-q-mb-lg">
+          <search/>
+        </div>
+        <q-space/>
+<!-- Main page btn -->
+          <q-btn class="row-right" color="orange" icon-right="home" to="/main" />
+            <q-btn class="row-right" color="orange" icon-right="logout" to="/" />
+      </q-toolbar>
+    </q-header>
+<!-- Footer Navigation - when screen px under 768 (Cellphones only) -->
+    <q-footer>
+      <q-tabs>
+        <q-route-tab
+          v-for="nav in navigation"
+          :key="nav.label"
+          :to="nav.to"
+          :icon="nav.icon"
+          :label="nav.label"
+          class="flex flex-center q-mt-xl"
+          text-color="orange"
+          color="bg-black"
+          unelevated />
+      </q-tabs>
+    </q-footer>
+<!-- Full screen Navigator (BP=767) - include all Usr favorite Recipes -->
+    <q-drawer
+      v-model="leftDrawerOpen"
+      :breakpoint="767"
+      :width="250"
+      bordered
+      content-class="bg-black"
+    >
+     <q-img
+          class="flex flex-center"
+          src="~assets/logo.png"
+        />
+      <q-list dark>
+        <q-item-label header><h6 class="text-orange">Liked Recipes <q-icon name="favorite" color="orange"/></h6></q-item-label>
+<!-- Array for all Favorite Recipes -->
+        <q-item
+          v-for="rec in myFavoriveRecipes"
+          :key="rec.label"
+          :to="rec.to"
+          class="text-grey-4"
+          exact
+          clickable>
+          <q-item-section avatar>
+            <q-icon :name="rec.icon" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>{{ rec.label }}</q-item-label>
+          </q-item-section>
+        <q-item-section side>
+          <q-btn
+          @click.stop="promptToDelete(id)"
+          flat
+          round
+          dense
+          color="orange"
+          icon="clear"/>
+        </q-item-section>
+        </q-item>
+      </q-list>
+    </q-drawer>
+    <q-page-container>
+      <router-view />
+    </q-page-container>
+    </div>
+  </q-layout>
+</template>
+
+<script>
+import { openURL } from 'quasar'
+
+export default {
+  name: 'MainLayout',
+  data () {
+    return {
+      leftDrawerOpen: this.$q.platform.is.desktop,
+      search: '',
+      myFavoriveRecipes: [
+        {
+          id: 1,
+          label: 'Fluffy Pancakes',
+          icon: 'local_dining',
+          to: '/myRecipes'
+        },
+        {
+          id: 2,
+          label: 'Best Italian Homemade Pizza',
+          icon: 'local_dining',
+          to: '/myRecipes'
+        },
+        {
+          id: 3,
+          label: 'Juicy Roasted Chicken',
+          icon: 'local_dining',
+          to: '/myRecipes'
+        }
+      ],
+      navigation: [
+        {
+          id: 1,
+          label: 'My Recipes',
+          icon: 'favorite',
+          to: '/myRecipes'
+        }
+      ]
+    }
+  },
+  components: {
+    search: require('components/search.vue').default
+  },
+  methods: {
+    openURL,
+    promptToDelete (id) {
+      this.$q.dialog({
+        title: 'Do you really want to delete this item?',
+        massage: 'Do you really want to delete this item?',
+        ok: {
+          push: true
+        },
+        cancel: {
+          color: 'negative'
+        },
+        persistent: true
+      }).onOk(() => {
+        console.log('deleted')
+      })
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+ @media screen and (min-width: 768px) {
+    .q-footer {
+      display: none;
+    }
+  }
+  .q-drawer {
+    .q-router-link--exact-active {
+      color: #c18523 !important;
+    }
+  }
+  .auto-style {
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  }
+</style>
