@@ -1,7 +1,7 @@
 <template>
  <div class="auto-tabs">
     <div class="flex flex-center">
-      <img src="~/assets/logo.png" width="150px" height="150px"/>
+      <img src="~/assets/logoSYR.png" width="250px" height="200px"/>
     </div>
     <div class="flex flex-center">
       <h2 class="text-orange-8">LogIn</h2>
@@ -142,7 +142,7 @@ this.$router.replace('/categories');
 </script>
 <style scoped>
 .auto-tabs {
-    max-width: 500px;
+    max-width: 400px;
     margin: 0 auto;
 }
 .q-input {
