@@ -2,9 +2,9 @@
   <div class="auto-tabs-one">
     <!-- Logo + title -->
     <div class="flex flex-center">
-      <img src="~/assets/logo.png" width="150px" height="150px"/>
+      <img src="~/assets/logoSYR.png" width="200px" height="150px"/>
       <br>
-      <h3 class="text-orange-8">Forgot Your Password?</h3>
+      <h4 class="text-orange-8">Forgot Your Password?</h4>
     </div>
     <!-- Form -->
   <form class="auto-tabs" @submit.prevent="submitFormLog">
@@ -104,11 +104,11 @@ this.$router.replace('/');
 </script>
 <style scoped>
 .auto-tabs {
-    max-width: 400px;
+    max-width: 300px;
     margin: 0 auto;
 }
 .auto-tabs-one {
-  max-width: 400px;
+  max-width: 300px;
   margin: 0 auto;
   text-align: center;
   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;  
