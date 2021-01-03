@@ -1,8 +1,8 @@
 <template>
     <div>
         <br>
-        <div class="q-gutter-y-xl flex-center" >
-        <q-input dark v-model= "searchCategory" label="Search"  color="orange" class="column items-center" >
+        <div class="row q-mb-xs flex-center" >
+        <q-input v-model= "searchCategory" label="Search"  color="orange">
             <template v-slot:prepend>
             <q-icon name="search" />
             </template>
@@ -109,9 +109,6 @@ export default {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-}
-.q-input {
-    padding: 25px 450px
 }
 .q-banner{
   padding: 2px 40px ;
