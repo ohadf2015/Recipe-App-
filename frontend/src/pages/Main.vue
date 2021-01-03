@@ -1,6 +1,7 @@
 <template class ="auto-tabs">
+<div class="fff">
   <div class="q-pa-md">
-      <div>
+    <div>
     <p class="row">Top Recipes of this Week</p>
       <slideTopRecipes/>
       </div>
@@ -29,7 +30,13 @@
     <p class="row">Chicken Recipes</p>
         <chickenRecipes/>
       </div>
-    </div>
+       <div class="border-top">
+        <br>
+    <p class="row">Debbug</p>
+        <checkOut/>
+      </div>
+      </div>
+      </div>
 </template>
 
 <script>
@@ -37,6 +44,7 @@ export default {
   data () {
     return {
       slideTopRecipes: 1,
+      checkOut: 1,
       basedOnYourTaste: 1,
       trending: 1,
       tenMinRecipes: 1,
@@ -46,6 +54,7 @@ export default {
   },
   components: {
     slideTopRecipes: require('components/mainPage/topRecipesOfTheWeek.vue').default,
+    checkOut: require('components/mainPage/checkOut.vue').default,
     basedOnYourTaste: require('components/mainPage/basedOnYourTaste.vue').default,
     trending: require('components/mainPage/trending.vue').default,
     tenMinRecipes: require('components/mainPage/tenMinRecipes.vue').default,
@@ -65,12 +74,17 @@ p {
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 .border-top {
-  border-top: 3px solid orange;
+  border-top: 3px solid rgb(243, 137, 15);
+}
+.fff {
+  /* background-color: radial-gradient(farthest-corner at 95% 30%,black,grey); */
+  background-color: black ;
 }
 .auto-tabs {
    max-width: 1500px;
    margin: 0 auto;
    min-width: 800px;
+   background-color: black;
 }
 
 </style>
