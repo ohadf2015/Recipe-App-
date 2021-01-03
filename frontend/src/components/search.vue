@@ -1,9 +1,10 @@
 <template>
     <q-input
         rounded outlined v-model.trim="text"
-        size="40"
+        size="140"
         label="Search"
         bg-color="grey-1"
+        class="flex flex-center"
         focus>
     <template v-slot:append>
       <q-icon v-if="text !== ''" name="close" @click="text =''" class="cursor-pointer"/>
