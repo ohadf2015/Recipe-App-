@@ -1,4 +1,4 @@
- <template>
+<template>
   <div class="q-pa-md">
     <q-carousel
       v-model="tenMin"
@@ -13,146 +13,85 @@
       class="bg-black shadow-4 rounded-borders"
     >
       <q-carousel-slide :name="1" class="column no-wrap">
-        <div class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap">
-          <q-img class="rounded-borders col-2 full-height" src="~assets/EasyFrenchDipSandwiches.png">
+      <div class="row fit justify q-col-gutter-md-start items-center q-gutter-md q-col-gutter-md no-wrap">
+        <q-btn class="items-center" to="/main" flat>
+            <q-avatar rounded size="170px" font-size="40px">
+          <q-img src="~assets/AvocadoBreakfastSandwich.png">
            <div class="absolute-full text-subtitle2 flex flex-center">
-            Easy French Dip Sandwiches
+           Avocado Breakfast Sandwich
           </div>
           <q-btn flat round color="red" icon="favorite_border" size="sm" />
           </q-img>
-          <q-img class="rounded-borders col-2 full-height" src="~assets/pestoPasta.png">
+            </q-avatar>
+        </q-btn>
+        <q-btn class="items-center" to="/main" flat>
+            <q-avatar rounded size="170px" font-size="40px">
+          <q-img src="~assets/TurkeyBreast.png">
            <div class="absolute-full text-subtitle2 flex flex-center">
-            Pesto Pasta in 10 min
+           Turkey Breast
           </div>
-          <q-btn flat round color="red" icon="favorite_border" size="sm" />
           </q-img>
-           <q-img class="rounded-borders col-2 full-height" src="~assets/EggplantBurgers.png">
+            </q-avatar>
+        </q-btn>
+        <q-btn class="items-center" to="/main" flat>
+            <q-avatar rounded size="170px" font-size="40px">
+          <q-img src="~assets/GrandmasCornBreadDressing.png">
            <div class="absolute-full text-subtitle2 flex flex-center">
-            Eggplant Burgers
+           Grandmas Corn Bread Dressing
           </div>
-          <q-btn flat round color="red" icon="favorite_border" size="sm" />
           </q-img>
-          <q-img class="rounded-borders col-2 full-height" src="~assets/HotDog.png">
+            </q-avatar>
+        </q-btn>
+            <q-btn class="items-center" to="/main" flat>
+            <q-avatar rounded size="170px" font-size="40px">
+          <q-img src="~assets/CurryChicken.png">
            <div class="absolute-full text-subtitle2 flex flex-center">
-            Chicago-Style Hot Dog
+           Five-Ingredient Red Curry Chicken
           </div>
-          <q-btn flat round color="red" icon="favorite_border" size="sm" />
           </q-img>
-           <q-img class="rounded-borders col-2 full-height" src="~assets/JuicyRoastedChicken.png">
-           <div class="absolute-full text-subtitle2 flex flex-center">
-             Juicy Roasted Chicken
-          </div>
-          <q-btn flat round color="red" icon="favorite_border" size="sm" />
-          </q-img>
-          <q-img class="rounded-borders col-2 full-height" src="~assets/Oats.png">
-           <div class="absolute-full text-subtitle2 flex flex-center">
-            Creamy Slow Cooker Steel-Cut Oats
-          </div>
-          <q-btn flat round color="red" icon="favorite_border" size="sm" />
-          </q-img>
-        </div>
+            </q-avatar>
+        </q-btn>
+           </div>
       </q-carousel-slide>
       <q-carousel-slide :name="2" class="column no-wrap">
-        <div class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap">
-          <q-img class="rounded-borders col-2 full-height" src="~assets/cheeseCake.png">
+        <div class="row fit justify-start items-center q-gutter-md q-col-gutter-md no-wrap">
+               <q-btn class="items-center" to="/main" flat>
+            <q-avatar rounded size="170px" font-size="40px">
+          <q-img src="~assets/CurryChicken.png">
            <div class="absolute-full text-subtitle2 flex flex-center">
-            Caption
+           Five-Ingredient Red Curry Chicken
           </div>
           </q-img>
-          <q-img class="rounded-borders col-2 full-height" src="https://cdn.quasar.dev/img/parallax1.jpg">
+            </q-avatar>
+        </q-btn>
+        <q-btn class="items-center" to="/main" flat>
+            <q-avatar rounded size="170px" font-size="40px">
+          <q-img src="~assets/CurryChicken.png">
            <div class="absolute-full text-subtitle2 flex flex-center">
-            Caption
+           Five-Ingredient Red Curry Chicken
           </div>
           </q-img>
-           <q-img class="rounded-borders col-2 full-height" src="~assets/cheeseCake.png">
+            </q-avatar>
+        </q-btn>
+        <q-btn class="items-center" to="/main" flat>
+            <q-avatar rounded size="170px" font-size="40px">
+          <q-img src="~assets/CurryChicken.png">
            <div class="absolute-full text-subtitle2 flex flex-center">
-            Caption
+           Five-Ingredient Red Curry Chicken
           </div>
           </q-img>
-          <q-img class="rounded-borders col-2 full-height" src="https://cdn.quasar.dev/img/parallax1.jpg">
+            </q-avatar>
+        </q-btn>
+            <q-btn class="items-center" to="/main" flat>
+            <q-avatar rounded size="170px" font-size="40px">
+          <q-img src="~assets/CurryChicken.png">
            <div class="absolute-full text-subtitle2 flex flex-center">
-            Caption
+           Five-Ingredient Red Curry Chicken
           </div>
           </q-img>
-           <q-img class="rounded-borders col-2 full-height" src="~assets/cheeseCake.png">
-           <div class="absolute-full text-subtitle2 flex flex-center">
-            Caption
-          </div>
-          </q-img>
-          <q-img class="rounded-borders col-2 full-height" src="https://cdn.quasar.dev/img/parallax1.jpg">
-           <div class="absolute-full text-subtitle2 flex flex-center">
-            Caption
-          </div>
-          </q-img>
-        </div>
-      </q-carousel-slide>
-      <q-carousel-slide :name="3" class="column no-wrap">
-        <div class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap">
-         <q-img class="rounded-borders col-2 full-height" src="~assets/cheeseCake.png">
-           <div class="absolute-full text-subtitle2 flex flex-center">
-            Caption
-          </div>
-          </q-img>
-          <q-img class="rounded-borders col-2 full-height" src="https://cdn.quasar.dev/img/parallax1.jpg">
-           <div class="absolute-full text-subtitle2 flex flex-center">
-            Caption
-          </div>
-          </q-img>
-           <q-img class="rounded-borders col-2 full-height" src="~assets/cheeseCake.png">
-           <div class="absolute-full text-subtitle2 flex flex-center">
-            Caption
-          </div>
-          </q-img>
-          <q-img class="rounded-borders col-2 full-height" src="https://cdn.quasar.dev/img/parallax1.jpg">
-           <div class="absolute-full text-subtitle2 flex flex-center">
-            Caption
-          </div>
-          </q-img>
-           <q-img class="rounded-borders col-2 full-height" src="~assets/cheeseCake.png">
-           <div class="absolute-full text-subtitle2 flex flex-center">
-            Caption
-          </div>
-          </q-img>
-          <q-img class="rounded-borders col-2 full-height" src="https://cdn.quasar.dev/img/parallax1.jpg">
-           <div class="absolute-full text-subtitle2 flex flex-center">
-            Caption
-          </div>
-          </q-img>
-        </div>
-      </q-carousel-slide>
-      <q-carousel-slide :name="4" class="column no-wrap">
-        <div class="row fit justify-start items-center q-gutter-xs q-col-gutter no-wrap">
-         <q-img class="rounded-borders col-2 full-height" src="~assets/cheeseCake.png">
-           <div class="absolute-full text-subtitle2 flex flex-center">
-            Caption
-          </div>
-          </q-img>
-          <q-img class="rounded-borders col-2 full-height" src="https://cdn.quasar.dev/img/parallax1.jpg">
-           <div class="absolute-full text-subtitle2 flex flex-center">
-            Caption
-          </div>
-          </q-img>
-           <q-img class="rounded-borders col-2 full-height" src="~assets/cheeseCake.png">
-           <div class="absolute-full text-subtitle2 flex flex-center">
-            Caption
-          </div>
-          </q-img>
-          <q-img class="rounded-borders col-2 full-height" src="https://cdn.quasar.dev/img/parallax1.jpg">
-           <div class="absolute-full text-subtitle2 flex flex-center">
-            Caption
-          </div>
-          </q-img>
-           <q-img class="rounded-borders col-2 full-height" src="~assets/cheeseCake.png">
-           <div class="absolute-full text-subtitle2 flex flex-center">
-            Caption
-          </div>
-          </q-img>
-          <q-img class="rounded-borders col-2 full-height" src="https://cdn.quasar.dev/img/parallax1.jpg">
-           <div class="absolute-full text-subtitle2 flex flex-center">
-            Caption
-          </div>
-    </q-img>
-        </div>
+            </q-avatar>
+        </q-btn>
+           </div>
       </q-carousel-slide>
     </q-carousel>
   </div>
