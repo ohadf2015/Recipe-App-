@@ -2,7 +2,6 @@
 # # # coding: utf-8
 print('hi from python')
 import os
-
 script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
 rel_path = "../data/ratings.csv"
 abs_file_path = os.path.join(script_dir, rel_path)
@@ -12,7 +11,7 @@ from pyspark.ml.recommendation import ALS
 from pyspark.ml.tuning import TrainValidationSplit, ParamGridBuilder
 from pyspark.sql import SparkSession
 spark=SparkSession.builder.appName("CF").getOrCreate()
-from pyspark.sql.functions import col
+from pyspark.sql.functions import coalesce
 
 
 
@@ -47,6 +46,10 @@ newRatings=spark.read.csv(
 
 recipes_ratings = recipes_ratings.union(newRatings)
 
+newSysUsers=newRatings.select("userId").distinct()
+
+
+newSysUsers.show()
 
 print('done reading data..')
 
@@ -98,10 +101,13 @@ print("RMSE= "+str(rmse))
 # print("  maxIter:"),best_model._java_obj.parent().getMaxIter()
 # print("  regParam:"),best_model._java_obj.parent().getRegParam()
 
-user_recs=best_model.recommendForAllUsers(30)
 
+userSubsetRecs=best_model.recommendForUserSubset(newSysUsers,30)
+# user_recs=best_model.recommendForAllUsers(30)
+print('user recs was made')
 
-user_recs.coalesce(1).write.format('json').save('./json')
+userSubsetRecs.show()
+userSubsetRecs.coalesce(1).write.format('json').save('./json')
 
 
 print('done recommandations analysis')
