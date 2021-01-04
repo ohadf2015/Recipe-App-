@@ -107,6 +107,7 @@ userSubsetRecs=best_model.recommendForUserSubset(newSysUsers,30)
 print('user recommandations were made')
 
 userSubsetRecs.show()
+# userSubsetRecs.toPandas().to_json('result.json', orient='records', force_ascii=False, lines=True)
 userSubsetRecs.coalesce(1).write.format('json').save('./json')
 
 
