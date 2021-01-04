@@ -1,41 +1,26 @@
 # # #!/usr/bin/env python
 # # # coding: utf-8
 print('hi from python')
-# import logging
-# logname="CF.txt"
-# logging.basicConfig(filename=logname,
-#                             filemode='a',
-#                             format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
-#                             datefmt='%H:%M:%S',
-#                             level=logging.DEBUG)
-
-# logging.info("Running CF")
-
-# logger = logging.getLogger('CF')
-
-
-
-
-
-
-
-
-
-# pip install pyspark
 import os
+
 script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
 rel_path = "../data/ratings.csv"
 abs_file_path = os.path.join(script_dir, rel_path)
-
-
 
 from pyspark.ml.evaluation import RegressionEvaluator
 from pyspark.ml.recommendation import ALS
 from pyspark.ml.tuning import TrainValidationSplit, ParamGridBuilder
 from pyspark.sql import SparkSession
 spark=SparkSession.builder.appName("CF").getOrCreate()
-
 from pyspark.sql.functions import col
+
+
+
+# delete old json
+import shutil 
+if os.path.exists('./json') and os.path.isdir('./json'):
+    shutil.rmtree('./json')
+
 
 print('reading data...')
 recipes_ratings=spark.read.csv(
@@ -61,7 +46,7 @@ newRatings=spark.read.csv(
 
 
 recipes_ratings = recipes_ratings.union(newRatings)
-# recipes_ratings.show()
+
 
 print('done reading data..')
 
@@ -76,14 +61,8 @@ als=ALS(userCol="userId",itemCol="recipeId",ratingCol="rating",coldStartStrategy
 #tune model using ParamGridBuilder       
 param_grid=ParamGridBuilder()            .addGrid(als.rank,[13])            .addGrid(als.maxIter,[18,19,20])            .addGrid(als.regParam,[.17,.18,.19])            .build()
 
-
-# show ratings for specific user
-# recipes_ratings.where(recipes_ratings.userId == 1400000).show()
-
-
 #define evaluator as RMSE
 evaluator=RegressionEvaluator(metricName="rmse",labelCol="rating",predictionCol="prediction")
-
 
 
 # #build cross validation using TrainValidationSplit
@@ -113,15 +92,27 @@ rmse=evaluator.evaluate(predictions)
 
 
 print("RMSE= "+str(rmse))
-print("**best model**")
-print("  rank:"),best_model.rank
-print("  maxIter:"),best_model._java_obj.parent().getMaxIter()
-print("  regParam:"),best_model._java_obj.parent().getRegParam()
+
+# print("**best model**")
+# print("  rank:"),best_model.rank
+# print("  maxIter:"),best_model._java_obj.parent().getMaxIter()
+# print("  regParam:"),best_model._java_obj.parent().getRegParam()
 
 user_recs=best_model.recommendForAllUsers(30)
 
 
-# user_recs.select("recommendations.recipeId", "recommendations.rating")
+user_recs.coalesce(1).write.format('json').save('./json')
+
+
+print('done recommandations analysis')
+
+
+# recipes_ratings.show()
+
+
+# show ratings for specific user
+# recipes_ratings.where(recipes_ratings.userId == 1400000).show()
+
 
 
 
@@ -136,19 +127,8 @@ user_recs=best_model.recommendForAllUsers(30)
 # # 	return ratings_matrix_ps
 
 
-# # user_recs.foreach(get_recs_for_user)
-
-
-
-# user_recs.coalesce(1).write.format('json').save('./json')
-
-
-
 # user_recs.show()
 
-
-
-# # recipe_recs.write.options(header='True', delimiter=',')  .csv("C:/Users/ohad/Desktop/lastCF_exp/cf.csv")
 
 
 
@@ -186,4 +166,4 @@ user_recs=best_model.recommendForAllUsers(30)
 # sameModel = MatrixFactorizationModel.load(spark, "C:/Users/ohad/Desktop/lastCF_exp")
 
 
-print('done recommandations analysis')
+
