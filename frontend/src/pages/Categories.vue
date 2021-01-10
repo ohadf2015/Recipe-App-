@@ -1,48 +1,51 @@
 <template>
-    <div>
-        <br>
-        <div class="row q-mb-xs flex-center" >
-        <q-input v-model= "searchCategory" label="Search"  color="orange">
+    <div class="auto-tabs">
+      <br>
+      <div class="row q-gutter-mb-xs flex-center " >
+        <q-input rounded standout bg-color="black" v-model.trim= "searchCategory" label="Search"  color="orange" style="width:35%">
             <template v-slot:prepend>
-            <q-icon name="search" />
+            <q-icon color="grey" name="search"/>
             </template>
         </q-input>
+      </div>
+      <br>
+      <br>
+      <div class="row q-mb-md">
+        <q-banner class="bg-black text-white col flex">
+          <h5 style="text-align:center">Choose at least <strong style="color:orange">3</strong> catrgories you like</h5>
+        </q-banner>
+      </div>
+      <q-form @submit.prevent="onSubmit">
+        <template v-if="hascatego">
+          <div class="q-pa-md text-white">
+            <div class="q-gutter-md flex col-12 flex-center">
+                  <div v-for ="item in getCategories" :key="item.name">
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                      <input class="checkinput col-12" type="checkbox" :id="item.numRec" :value="item.name" hidden v-model="checked_categories">
+                      <label class="sem" :for="item.numRec">
+                        <q-img :src="picUrl(item.name)" width="150px" height="150px"/>
+                        <div class="FillParent sem"></div>
+                      </label>
+                      <br>
+                      <br>
+                      <q-item-label style="text-align:center" :for="item.numRec">{{item.name}}</q-item-label>
+                      <br>
+                      <br>
+                  </div>
+            </div>
+          </div>
+        </template>
+        <div class="row q-mb-md">
+          <q-btn v-if="checked_categories.length>2" class="col"
+                  to="/main"
+                  text-color="black"
+                  color="yellow-10"
+                  icon-right="beenhere"
+                  label="submit"
+                />
         </div>
         <br>
-        <br>
-     <q-form class="auto-tabs" @submit.prevent="onSubmit">
-    <div class="row q-mb-md">
-      <q-banner class="bg-black text-white col flex">
-        <h5>Choose at least <strong style="color:orange">3</strong> catrgories you like</h5>
-      </q-banner>
-    </div>
-    <template v-if="hascatego">
-      <div class="q-pa-md text-white absolte-center " style="width:800px">
-         <div class="q-gutter-xs flex flex-center  ">
-
-              <div v-for ="item in getCategories" :key="item.name" class="category_item row" >
-                  <input class="checkinput col-12" type="checkbox" :id="item.numRec" :value="item.name" hidden v-model="checked_categories">
-                  <label class="sem" :for="item.numRec">
-                    <q-img :src="picUrl(item.name)" width="150px" height="150px" />
-                    <div class="FillParent sem"></div>
-                  </label>
-                  <label  :for="item.numRec">{{item.name}}</label>
-              </div>
-         </div>
-      </div>
-    </template>
-    <div class="row q-mb-md">
-      <q-btn v-if="checked_categories.length>2" class="col"
-              to="/"
-              text-color="black"
-               color="yellow-10"
-              icon-right="beenhere"
-              label="submit"
-            />
-    </div>
-    <br>
-    </q-form>
-    <br> 
+      </q-form>
  </div>
 </template>
 
@@ -101,17 +104,13 @@ export default {
 </script>
 <style scoped>
 .auto-tabs {
-    max-width: 500px;
+    max-width: 45%;
     margin: 0 auto;
 }
-.q-form{
-   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-.q-banner{
-  padding: 2px 40px ;
+.q-input{
+  position: fixed;
+  z-index: 30;
+  width: 15%;
 }
 label.sem {
   border: 4px solid orange;
@@ -125,15 +124,6 @@ label.sem {
 }
 .checkinput:checked ~.sem>.sem{
   background-color: rgba(236, 166, 36, 0.5);
-}
-.category_item{
-  display: inline-flex;
-  flex-direction: column ;
-  height: 250px;
-  max-width: 28%;
-  justify-content: center;
-  align-items: center;
-  padding: 25px;
 }
 .FillParent {
   display: block;
