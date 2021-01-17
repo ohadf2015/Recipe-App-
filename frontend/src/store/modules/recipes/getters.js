@@ -1,9 +1,9 @@
 export default {
-    getCategs(state) {
-        return state.categories;
+    getRecipe(state) {
+        return state.recipes;
     },
-    hasCategs(state) {
-        return state.categories && state.categories.length > 0
+    hasRecipe(state) {
+        return state.recipes && state.recipes.length > 0
     }
 
 }

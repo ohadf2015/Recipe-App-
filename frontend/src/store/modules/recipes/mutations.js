@@ -1,5 +1,5 @@
 export default {
-    setCatego(state, payload) {
-        state.categories = payload;
+    setRecipe(state, payload) {
+        state.recipes = payload;
     }
 }

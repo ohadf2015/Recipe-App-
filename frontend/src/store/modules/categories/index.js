@@ -4,7 +4,7 @@ import getters from './getters.js';
 export default {
     state() {
         return {
-            recipes: null
+            categories: null
         }
     },
     mutations,

@@ -1,6 +1,6 @@
 export default {
-    getUserID(state) {
-        return state.userID;
+    getUserId(state) {
+        return state.userId;
     },
     getToken(state) {
         return state.token;
