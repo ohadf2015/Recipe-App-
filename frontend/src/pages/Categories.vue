@@ -36,12 +36,12 @@
           </div>
         </template>
         <div class="row q-mb-md">
-          <q-btn v-if="checked_categories.length>2" class="col"
-                  to="/main"
+          <q-btn v-if="checked_categories.length>2" class="col q-gutter-mb-xs flex-center "
                   text-color="black"
                   color="yellow-10"
                   icon-right="beenhere"
                   label="submit"
+                  type="submit"
                 />
         </div>
         <br>
@@ -62,12 +62,19 @@ export default {
     getCategories(){
        return this.$store.getters.getCategs.filter(item => {
         return item.name.toLowerCase().includes(this.searchCategory.toLowerCase())
+       
       })
      }
     },
     created(){
         this.fetchCat();
 
+    },
+    beforeUpdate() {
+      console.log(this.$store.getters.getUserId)
+
+      //console.log(JSON.stringify(this.$route))
+       console.log(this.checked_categories)
     },
     methods:{
         async fetchCat(){
@@ -81,25 +88,35 @@ export default {
       picUrl (name) {
       return require(`../assets/img/categories/${name.trim()}.jpg`)
       },
-        onSubmit () {
-      if (this.checked_categories.length>2) {
+      async onSubmit () {
+        const up = await this.$store.dispatch('updateCategory', {
+        id: this.$store.getters.getUserId,
+        updateCat: this.checked_categories })
+        console.log(up)
+      if (!up.success) {
         this.$q.notify({
           color: 'red-5',
           textColor: 'white',
           icon: 'warning',
-          message: 'You need to select 3 categories'
+          message: 'You need to select  at least 3 categories'
         })
       } else {
         this.$q.notify({
           color: 'green-4',
           textColor: 'white',
           icon: 'cloud_done',
-          message: 'Submitted'
-        })
-      }
+          message: 'Submitted',
+          timeout:1000
+        });
+          setTimeout(()=>{
+          this.$router.replace('/main');
+          },3000);
+      } 
+      
+    }
     }
          
-    }
+    
 }
 </script>
 <style scoped>
@@ -135,10 +152,10 @@ label.sem {
 }
 .q-btn{
   position: fixed;
-  right: 670px;
+  right:30%;
   bottom: 0px;
   z-index: 30;
-  width: 15%;
+  width: 40%;
   padding:0px 5px 0px 10px
 }
 </style>
