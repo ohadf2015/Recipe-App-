@@ -2,6 +2,7 @@ const usermodel = require('../models/users');
 const crypto = require('crypto');
 const errorResponse = require('../utils/errorResponse');
 const sendmsg = require('../utils/sendMessage');
+const { getUnpackedSettings } = require('http2');
 // #desc: Register user
 // #route GET api/auth/register
 exports.register = async(req, res, next) => {
@@ -42,6 +43,7 @@ exports.login = async(req, res, next) => {
         }
         //const token = user.getSignedJwtToken();
         //res.status(200).json({ success: true, token });
+
         sendTokenRes(user, 200, res);
 
     } catch (err) {
@@ -51,6 +53,7 @@ exports.login = async(req, res, next) => {
 
 }
 const sendTokenRes = (user, status, res) => {
+    console.log(JSON.stringify(user))
     const token = user.getSignedJwtToken();
     const opts = {
         expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000),
@@ -62,8 +65,9 @@ const sendTokenRes = (user, status, res) => {
     }
     res.status(status).cookie('token', token, opts).json({
         success: true,
-        userid: '11',
-        token
+        userid: user.id,
+        token,
+        user
     })
 }
 exports.myAccount = async(req, res, next) => {
@@ -72,6 +76,19 @@ exports.myAccount = async(req, res, next) => {
         success: true,
         data: user
     })
+}
+exports.updateUserCategory = async(req, res, next) => {
+    if (!req.body.userId) {
+        return next(new errorResponse('Please provide valid user id', 404));
+    }
+    const user = await usermodel.findOne({ _id: req.body.userId});
+    if (!user) {
+        return next(new errorResponse('No user with that id', 404));
+    }
+    user.categories = user.categories.concat(req.body.categories);
+    await user.save();
+    res.status(200).json({ success: true });
+
 }
 exports.forgotPass = async(req, res, next) => {
     const user = await usermodel.findOne({ email: req.body.email });
