@@ -4,6 +4,7 @@ const cors = require('cors');
 const colors = require('colors');
 const recipes = require('./routes/recipes');
 const categories = require('./routes/categories');
+const recommendations = require('./routes/recommendations');
 const users = require('./routes/auth');
 const logger = require('./middleware/logger');
 const cookiep = require('cookie-parser');
@@ -28,6 +29,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use(preventInjection());
 app.use('/api/recipes', recipes);
 app.use('/api/categories', categories);
+app.use('/api/recommendations', recommendations);
 app.use('/api/auth', users);
 app.use(errorHandler);
 const PORT = process.env.PORT || 5000;

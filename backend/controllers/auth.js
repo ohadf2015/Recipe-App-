@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const errorResponse = require('../utils/errorResponse');
 const sendmsg = require('../utils/sendMessage');
 const { getUnpackedSettings } = require('http2');
+const { compact } = require('lodash');
 // #desc: Register user
 // #route GET api/auth/register
 exports.register = async(req, res, next) => {
@@ -78,8 +79,10 @@ exports.myAccount = async(req, res, next) => {
     })
 }
 exports.updateUserCategory = async(req, res, next) => {
+ 
     if (!req.body.userId) {
-        return next(new errorResponse('Please provide valid user id', 404));
+        console.log(req.body)
+        return next(new errorResponse(`${req.body.updateCat}`, 404));
     }
     const user = await usermodel.findOne({ _id: req.body.userId});
     if (!user) {

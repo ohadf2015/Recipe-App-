@@ -2,10 +2,11 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import authModule from './modules/auth/index.js';
 import recipesModule from './modules/recipes/index.js';
+import categoriesModule from './modules/categories/index.js';
+import usersModule from './modules/user/index.js';
 // import example from './module-example'
 
 Vue.use(Vuex)
-
 /*
  * If not building with SSR mode, you can
  * directly export the Store instantiation;
@@ -19,9 +20,10 @@ export default function( /* { ssrContext } */ ) {
     const Store = new Vuex.Store({
         modules: {
             auth: authModule,
-            recipes: recipesModule
+            recipes: recipesModule,
+            categories:categoriesModule,
+            users:usersModule
         },
-
         // enable strict mode (adds overhead!)
         // for dev mode only
         strict: process.env.DEBUGGING
