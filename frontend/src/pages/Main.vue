@@ -3,32 +3,32 @@
   <div class="q-pa-md">
     <div>
     <p class="row">Top Recipes of this Week</p>
-      <slideTopRecipes/>
+      <mainRecipes/>
       </div>
     <div class="border-top">
         <br>
     <p class="row">Based on your Taste</p>
-        <basedOnYourTaste/>
+        <mainRecipes/>
       </div>
     <div class="border-top">
         <br>
     <p class="row">Trending</p>
-        <trending/>
+        <mainRecipes/>
       </div>
     <div class="border-top">
         <br>
     <p class="row">10 min' Recipes</p>
-        <tenMinRecipes/>
+        <mainRecipes/>
       </div>
     <div class="border-top">
         <br>
     <p class="row">Holiday Recipes</p>
-        <holidayRecipes/>
+        <mainRecipes/>
       </div>
     <div class="border-top">
         <br>
     <p class="row">Chicken Recipes</p>
-        <chickenRecipes/>
+        <mainRecipes/>
       </div>
        <div class="border-top">
         <br>
