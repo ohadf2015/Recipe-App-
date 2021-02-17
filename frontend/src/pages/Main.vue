@@ -3,32 +3,32 @@
   <div class="q-pa-md">
     <div>
     <p class="row">Top Recipes of this Week</p>
-      <slideTopRecipes/>
+      <mainRecipes/>
       </div>
     <div class="border-top">
         <br>
     <p class="row">Based on your Taste</p>
-        <basedOnYourTaste/>
+        <mainRecipes/>
       </div>
     <div class="border-top">
         <br>
     <p class="row">Trending</p>
-        <trending/>
+        <mainRecipes/>
       </div>
     <div class="border-top">
         <br>
     <p class="row">10 min' Recipes</p>
-        <tenMinRecipes/>
+        <mainRecipes/>
       </div>
     <div class="border-top">
         <br>
     <p class="row">Holiday Recipes</p>
-        <holidayRecipes/>
+        <mainRecipes/>
       </div>
     <div class="border-top">
         <br>
     <p class="row">Chicken Recipes</p>
-        <chickenRecipes/>
+        <mainRecipes/>
       </div>
        <div class="border-top">
         <br>
@@ -43,23 +43,52 @@
 export default {
   data () {
     return {
-      slideTopRecipes: 1,
+      mainRecipes: 1,
       checkOut: 1,
-      basedOnYourTaste: 1,
-      trending: 1,
-      tenMinRecipes: 1,
-      chickenRecipes: 1,
-      holidayRecipes: 1
+      recipe: 1,
+      recipes: [
+        {
+          id: 1,
+          img: '~assets/GingerbreadWaffles.png',
+          label: 'Gingerbread Waffles',
+          to: '/gingerbreadWaffles'
+        },
+        {
+          id: 2,
+          img: '~assets/pizza.png',
+          label: 'Top Italian Pizza',
+          to: '/topItalianPizza'
+        },
+                {
+          id: 3,
+          img: '~assets/GingerbreadWaffles.png',
+          label: 'Gingerbread Waffles',
+          to: '/gingerbreadWaffles'
+        },
+        {
+          id: 4,
+          img: '~assets/pizza.png',
+          label: 'Top Italian Pizza',
+          to: '/topItalianPizza'
+        },
+                {
+          id: 5,
+          img: '~assets/GingerbreadWaffles.png',
+          label: 'Gingerbread Waffles',
+          to: '/gingerbreadWaffles'
+        },
+        {
+          id: 6,
+          img: '~assets/pizza.png',
+          label: 'Top Italian Pizza',
+          to: '/topItalianPizza'
+        }
+      ]
     }
   },
   components: {
-    slideTopRecipes: require('components/mainPage/topRecipesOfTheWeek.vue').default,
+    mainRecipes: require('components/mainPage/mainRecipes.vue').default,
     checkOut: require('components/mainPage/checkOut.vue').default,
-    basedOnYourTaste: require('components/mainPage/basedOnYourTaste.vue').default,
-    trending: require('components/mainPage/trending.vue').default,
-    tenMinRecipes: require('components/mainPage/tenMinRecipes.vue').default,
-    holidayRecipes: require('components/mainPage/holidayRecipes.vue').default,
-    ChickenRecipes: require('components/mainPage/chickenRecipes.vue').default
   }
 }
 </script>
