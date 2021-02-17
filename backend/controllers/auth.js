@@ -2,8 +2,7 @@ const usermodel = require('../models/users');
 const crypto = require('crypto');
 const errorResponse = require('../utils/errorResponse');
 const sendmsg = require('../utils/sendMessage');
-const { getUnpackedSettings } = require('http2');
-const { compact } = require('lodash');
+
 // #desc: Register user
 // #route GET api/auth/register
 exports.register = async(req, res, next) => {

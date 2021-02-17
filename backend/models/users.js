@@ -2,7 +2,12 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const autoIncrement = require('mongoose-auto-increment');
+autoIncrement.initialize(mongoose.connection)
 const userSchema = new mongoose.Schema({
+    recommandationId:{
+        type:Number
+    },
     fullname: {
         type: String,
         required: [true, 'Please enter your name!']
@@ -35,14 +40,25 @@ const userSchema = new mongoose.Schema({
         default: Date.now
     }
 });
+
+
+
+
+userSchema.plugin(autoIncrement.plugin, {
+    model: 'users',
+    field: 'recommandationId',
+    startAt: 1400000,
+    incrementBy: 1
+});
+
 userSchema.pre('save', async function(next) {
+console.log(this)
     if (!this.isModified('password')) {
         next();
     }
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
-
-
+ 
 });
 //sign JWT
 userSchema.methods.getSignedJwtToken = function() {
@@ -62,3 +78,12 @@ userSchema.methods.getResetPassTok = function() {
 
 }
 module.exports = mongoose.model('users', userSchema);
+
+
+
+
+
+
+
+
+

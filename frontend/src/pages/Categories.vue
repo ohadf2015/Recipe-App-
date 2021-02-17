@@ -2,9 +2,10 @@
     <div class="auto-tabs">
       <br>
       <div class="row q-gutter-mb-xs flex-center " >
-        <q-input rounded standout bg-color="black" v-model.trim= "searchCategory" label="Search"  color="orange" style="width:35%">
+        <q-input rounded standout="text-light " inverted-light  bg-color="black"  v-model.trim="searchCategory" label="Search"  color="orange" style="width:35%">
+          
             <template v-slot:prepend>
-            <q-icon color="grey" name="search"/>
+            <q-icon color="orange" name="search"/>
             </template>
         </q-input>
       </div>
@@ -12,7 +13,7 @@
       <br>
       <div class="row q-mb-md">
         <q-banner class="bg-black text-white col flex">
-          <h5 style="text-align:center">Choose at least <strong style="color:orange">3</strong> catrgories you like</h5>
+          <h5 style="text-align:center">Choose at least <strong style="color:orange">3</strong> categories you like</h5>
         </q-banner>
       </div>
       <q-form @submit.prevent="onSubmit">
@@ -60,9 +61,9 @@ export default {
     },
     computed:{
     getCategories(){
-       return this.$store.getters.getCategs.filter(item => {
+       return this.$store.getters['categories/getCategs'].filter(item => {
         return item.name.toLowerCase().includes(this.searchCategory.toLowerCase())
-       
+
       })
      }
     },
@@ -71,17 +72,16 @@ export default {
 
     },
     beforeUpdate() {
-      console.log(this.$store.getters.getUserId)
-
       //console.log(JSON.stringify(this.$route))
        console.log(this.checked_categories)
     },
     methods:{
         async fetchCat(){
             try{
-                await this.$store.dispatch('getCatego');
+                await this.$store.dispatch('categories/getCatego');
                 this.hascatego = true;
             }catch (err){
+              console.log(err)
                 throw err.message;
             }
         },
@@ -89,9 +89,10 @@ export default {
       return require(`../assets/img/categories/${name.trim()}.jpg`)
       },
       async onSubmit () {
-        const up = await this.$store.dispatch('updateCategory', {
-        id: this.$store.getters.getUserId,
-        updateCat: this.checked_categories })
+        let userId=await this.$store.getters['users/getUserId']
+
+        const up = await this.$store.dispatch('users/updateCategory', {id:userId,
+        updateCat: this.checked_categories})
         console.log(up)
       if (!up.success) {
         this.$q.notify({
@@ -111,12 +112,12 @@ export default {
           setTimeout(()=>{
           this.$router.replace('/main');
           },3000);
-      } 
-      
+      }
+
     }
     }
-         
-    
+
+
 }
 </script>
 <style scoped>
@@ -128,6 +129,7 @@ export default {
   position: fixed;
   z-index: 30;
   width: 15%;
+  color:white
 }
 label.sem {
   border: 4px solid orange;
@@ -158,4 +160,6 @@ label.sem {
   width: 40%;
   padding:0px 5px 0px 10px
 }
+
+
 </style>

@@ -25,6 +25,8 @@ exports.createRecommendations = async(req, res, next) => {
 
     }
 }
+
+
 const deleteAllData = async () => {
     try {
       await recSchema.deleteMany();

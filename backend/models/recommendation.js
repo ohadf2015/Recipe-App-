@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const recSchema = new mongoose.Schema({
-    userId: Number,
+    recommandationId: Number,
     recommendations: Object,
 });
 
