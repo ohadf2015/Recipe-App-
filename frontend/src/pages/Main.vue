@@ -30,11 +30,6 @@
     <p class="row">Chicken Recipes</p>
         <mainRecipes/>
       </div>
-       <div class="border-top">
-        <br>
-    <p class="row">Debbug</p>
-        <checkOut/>
-      </div>
       </div>
       </div>
 </template>
@@ -45,45 +40,7 @@ export default {
     return {
       mainRecipes: 1,
       checkOut: 1,
-      recipe: 1,
-      recipes: [
-        {
-          id: 1,
-          img: '~assets/GingerbreadWaffles.png',
-          label: 'Gingerbread Waffles',
-          to: '/gingerbreadWaffles'
-        },
-        {
-          id: 2,
-          img: '~assets/pizza.png',
-          label: 'Top Italian Pizza',
-          to: '/topItalianPizza'
-        },
-                {
-          id: 3,
-          img: '~assets/GingerbreadWaffles.png',
-          label: 'Gingerbread Waffles',
-          to: '/gingerbreadWaffles'
-        },
-        {
-          id: 4,
-          img: '~assets/pizza.png',
-          label: 'Top Italian Pizza',
-          to: '/topItalianPizza'
-        },
-                {
-          id: 5,
-          img: '~assets/GingerbreadWaffles.png',
-          label: 'Gingerbread Waffles',
-          to: '/gingerbreadWaffles'
-        },
-        {
-          id: 6,
-          img: '~assets/pizza.png',
-          label: 'Top Italian Pizza',
-          to: '/topItalianPizza'
-        }
-      ]
+      recipe: 1
     }
   },
   
@@ -107,6 +64,7 @@ export default {
             }
         },
 
+    mainRecipes: require('components/mainPage/mainRecipes.vue').default
   }
 }
 </script>
