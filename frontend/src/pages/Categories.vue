@@ -20,6 +20,9 @@
         <template v-if="hascatego">
           <div class="q-pa-md text-white">
             <div class="q-gutter-md flex col-12 flex-center">
+              <!-- <div v-for="(item,index) in user_categories" :key="index">
+                {{item.categories}}
+              </div> -->
                   <div v-for ="item in getCategories" :key="item.name">
                       &nbsp;&nbsp;&nbsp;&nbsp;
                       <input class="checkinput col-12" type="checkbox" :id="item.numRec" :value="item.name" hidden v-model="checked_categories">
@@ -56,7 +59,8 @@ export default {
         return {
             searchCategory: '',
             hascatego:false,
-            checked_categories: []
+            checked_categories: [],
+            user_categories: ["World Cuisine Recipes", "Main Dish Recipes", "Meat and Poultry Recipes"]
         }
     },
     computed:{
@@ -67,8 +71,18 @@ export default {
       })
      }
     },
-    created(){
+   
+    created:async function(){
         this.fetchCat();
+        // let userData = await this.getUserData();
+        // this.user_categories = userData.categories;
+        // this.checked_categories=this.user_categories
+        console.log( "uaer:"+this.user_categories)
+        if(this.user_categories==[])
+              this.checked_categories=[]
+            else
+            this.checked_categories=[...this.user_categories]
+          console.log("checked"+this.checked_categories) 
 
     },
     beforeUpdate() {
@@ -85,12 +99,18 @@ export default {
                 throw err.message;
             }
         },
+    async getUserData(){
+     let userId= await this.$store.getters['users/getUserId']
+     alert("LAAAAALA")
+     console.log(userId);
+     return this.$store.dispatch('users/getUserData', {id:userId}) 
+    // return this.$store.getters['users/getUserCat']
+    },
       picUrl (name) {
       return require(`../assets/img/categories/${name.trim()}.jpg`)
       },
       async onSubmit () {
         let userId=await this.$store.getters['users/getUserId']
-
         const up = await this.$store.dispatch('users/updateCategory', {id:userId,
         updateCat: this.checked_categories})
         console.log(up)
