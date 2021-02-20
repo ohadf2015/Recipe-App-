@@ -56,20 +56,19 @@ export default {
         return {
             searchCategory: '',
             hascatego:false,
-            checked_categories: []
+            checked_categories: null
         }
     },
     computed:{
     getCategories(){
-       return this.$store.getters['categories/getCategs'].filter(item => {
+       return this.$store.getters['getCategories'].filter(item => {
         return item.name.toLowerCase().includes(this.searchCategory.toLowerCase())
-
       })
      }
     },
     created(){
         this.fetchCat();
-
+        this.checked_categories=this.$store.getters['getUserCategories']
     },
     beforeUpdate() {
       //console.log(JSON.stringify(this.$route))
@@ -78,7 +77,8 @@ export default {
     methods:{
         async fetchCat(){
             try{
-                await this.$store.dispatch('categories/getCatego');
+                await this.$store.dispatch('getCategories');
+          
                 this.hascatego = true;
             }catch (err){
               console.log(err)
@@ -89,9 +89,8 @@ export default {
       return require(`../assets/img/categories/${name.trim()}.jpg`)
       },
       async onSubmit () {
-        let userId=await this.$store.getters['users/getUserId']
-
-        const up = await this.$store.dispatch('users/updateCategory', {id:userId,
+        const userId=await this.$store.getters['getUserId']
+        const up = await this.$store.dispatch('updateCategories', {id:userId,
         updateCat: this.checked_categories})
         console.log(up)
       if (!up.success) {
@@ -105,7 +104,7 @@ export default {
         this.$q.notify({
           color: 'green-4',
           textColor: 'white',
-          icon: 'cloud_done',
+          icon: 'done',
           message: 'Submitted',
           timeout:1000
         });
@@ -113,11 +112,8 @@ export default {
           this.$router.replace('/main');
           },3000);
       }
-
     }
     }
-
-
 }
 </script>
 <style scoped>
@@ -160,6 +156,4 @@ label.sem {
   width: 40%;
   padding:0px 5px 0px 10px
 }
-
-
 </style>

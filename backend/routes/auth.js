@@ -8,5 +8,4 @@ router.get('/account', protect, myAccount);
 router.post('/forgotpass', forgotPass);
 router.post('/resetpass/:restoken', resetPassByToken);
 router.get('/logout', logout);
-router.post('/updateUserCategory', updateUserCategory);
 module.exports = router;

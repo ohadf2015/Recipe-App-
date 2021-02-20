@@ -77,21 +77,9 @@ exports.myAccount = async(req, res, next) => {
         data: user
     })
 }
-exports.updateUserCategory = async(req, res, next) => {
- 
-    if (!req.body.userId) {
-        console.log(req.body)
-        return next(new errorResponse(`${req.body.updateCat}`, 404));
-    }
-    const user = await usermodel.findOne({ _id: req.body.userId});
-    if (!user) {
-        return next(new errorResponse('No user with that id', 404));
-    }
-    user.categories = user.categories.concat(req.body.categories);
-    await user.save();
-    res.status(200).json({ success: true });
 
-}
+
+
 exports.forgotPass = async(req, res, next) => {
     const user = await usermodel.findOne({ email: req.body.email });
     if (!user) {

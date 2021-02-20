@@ -49,22 +49,22 @@ export default {
 
     },
   components: {
-    mainRecipes: require('components/mainPage/mainRecipes.vue').default,
-    checkOut: require('components/mainPage/checkOut.vue').default,
+    // mainRecipes: require('components/mainPage/mainRecipes.vue').default,
+    // checkOut: require('components/mainPage /checkOut.vue').default,
   },
   methods: {
         async fetchRecipes(){
             try{
               console.log('hello')
-                await this.$store.dispatch('recipes/getRec');
+              await this.$store.dispatch('recipes/getRec');
                 // this.hascatego = true;
             }catch (err){
               console.log(err)
                 throw err.message;
             }
         },
-
-    mainRecipes: require('components/mainPage/mainRecipes.vue').default
+          
+    // mainRecipes: require('components/mainPage/mainRecipes.vue').default
   }
 }
 </script>

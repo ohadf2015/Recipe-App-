@@ -2,7 +2,12 @@
 # # # coding: utf-8
 print('hi from python')
 import os
+from typing import Literal
+
+from pyspark.sql.context import SQLContext
 script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
+from dotenv import load_dotenv
+load_dotenv(os.path.join(script_dir, "../config/config.env"))
 rel_path = "../data/ratings.csv"
 abs_file_path = os.path.join(script_dir, rel_path)
 
@@ -10,15 +15,22 @@ from pyspark.ml.evaluation import RegressionEvaluator
 from pyspark.ml.recommendation import ALS
 from pyspark.ml.tuning import TrainValidationSplit, ParamGridBuilder
 from pyspark.sql import SparkSession
-spark=SparkSession.builder.appName("CF").getOrCreate()
-from pyspark.sql.functions import coalesce
+spark=SparkSession.builder.appName("CF")\
+    .config("spark.mongodb.input.uri", os.getenv("MONGO_URI")) \
+    .config("spark.mongodb.input.collection", "users") \
+    .config("spark.mongodb.output.uri", os.getenv("MONGO_URI")) \
+    .config("spark.mongodb.output.collection", "recommandations") \
+    .config("spark.jars.packages", "org.mongodb.spark:mongo-spark-connector_2.12:2.4.3") \
+    .getOrCreate()
+from pyspark.sql.functions import coalesce, explode
 
-
+# spark.mongodb.input.uri=os.getenv("MONGO_URI")
+# spark.mongodb.input.collection="users"
 
 # delete old json
-import shutil 
-if os.path.exists('./json') and os.path.isdir('./json'):
-    shutil.rmtree('./json')
+# import shutil 
+# if os.path.exists('./json') and os.path.isdir('./json'):
+#     shutil.rmtree('./json')
 
 
 print('reading data...')
@@ -43,10 +55,16 @@ newRatings=spark.read.csv(
     inferSchema=True,
 )
 
+df = spark.read.format("mongo").load()
+df.createOrReplaceTempView("newSysRatings")
+usersChoices=spark.sql('SELECT recommandationId as userId,5 as rating,categories FROM newSysRatings ')
+usersChoices=usersChoices.select(usersChoices.userId,usersChoices.rating,explode(usersChoices.categories))
+usersChoices=usersChoices.withColumnRenamed('col', 'recipId')
 
-recipes_ratings = recipes_ratings.union(newRatings)
+usersChoices.show()
+recipes_ratings = recipes_ratings.union(usersChoices)
 
-newSysUsers=newRatings.select("userId").distinct()
+newSysUsers=usersChoices.select("userId").distinct()
 
 
 newSysUsers.show()
@@ -57,7 +75,7 @@ print('done reading data..')
 
 
 
-#create ALS model
+#create ALS model 
 als=ALS(userCol="userId",itemCol="recipeId",ratingCol="rating",coldStartStrategy="drop",nonnegative=True)
 
 
@@ -108,7 +126,9 @@ print('user recommandations were made')
 
 userSubsetRecs.show()
 # userSubsetRecs.toPandas().to_json('result.json', orient='records', force_ascii=False, lines=True)
-userSubsetRecs.coalesce(1).write.format('json').save('./json')
+
+# userSubsetRecs.coalesce(1).write.format('json').save('./json')
+userSubsetRecs.write.format('mongo').mode('overwrite').save()
 # user_recs.coalesce(1).write.format('json').save('./json')
 
 print('done recommandations analysis')
