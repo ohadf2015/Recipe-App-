@@ -25,7 +25,7 @@ const actions = {
 // mutations
 const mutations = {
     setCategories(state, payload) {
-        state.categories = payload.data;
+        state.categories = payload;
     }
 };
 

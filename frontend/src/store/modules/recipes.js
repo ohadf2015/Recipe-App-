@@ -9,10 +9,10 @@ const state = () => ({
 // getters
 const getters = {
 
-    getRecipe(state) {
+    getRecipes(state) {
         return state.recipes;
     },
-    hasRecipe(state) {
+    hasRecipes(state) {
         return state.recipes && state.recipes.length > 0
     }
 
@@ -33,7 +33,7 @@ const actions = {
 // mutations
 const mutations = {
     setRecipes(state, payload) {
-        state.recipes = payload;
+        state.recipes = payload.data;
     }
 }
 

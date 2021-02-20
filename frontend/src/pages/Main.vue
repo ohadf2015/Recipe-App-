@@ -1,46 +1,25 @@
 <template class ="auto-tabs">
 <div class="fff">
-  <div class="q-pa-md">
+  <div class="q-pa-md" v-for="row in recipesRows" :key="row.name">
     <div>
-    <p class="row">Top Recipes of this Week</p>
-      <mainRecipes/>
+    <p class="row">{{row.name}}</p>
+      <mainRecipes v-bind="row.recipes"/>
       </div>
     <div class="border-top">
         <br>
-    <p class="row">Based on your Taste</p>
-        <mainRecipes/>
-      </div>
-    <div class="border-top">
-        <br>
-    <p class="row">Trending</p>
-        <mainRecipes/>
-      </div>
-    <div class="border-top">
-        <br>
-    <p class="row">10 min' Recipes</p>
-        <mainRecipes/>
-      </div>
-    <div class="border-top">
-        <br>
-    <p class="row">Holiday Recipes</p>
-        <mainRecipes/>
-      </div>
-    <div class="border-top">
-        <br>
-    <p class="row">Chicken Recipes</p>
-        <mainRecipes/>
+
       </div>
       </div>
       </div>
 </template>
 
 <script>
+import mainRecipes from '../components/mainPage/mainRecipes'
 export default {
   data () {
     return {
-      mainRecipes: 1,
-      checkOut: 1,
-      recipe: 1
+      recipesRows:null,
+    
     }
   },
   
@@ -49,15 +28,17 @@ export default {
 
     },
   components: {
-    // mainRecipes: require('components/mainPage/mainRecipes.vue').default,
+   mainRecipes
     // checkOut: require('components/mainPage /checkOut.vue').default,
   },
+
+ 
   methods: {
         async fetchRecipes(){
             try{
-              console.log('hello')
-              await this.$store.dispatch('recipes/getRec');
-                // this.hascatego = true;
+             const userData=await this.$store.getters['getUserData']
+            await this.$store.dispatch('getUserRecipes',{userData});
+               this.recipesRows= this.$store.getters['getRecipes'] // this.hascatego = true;
             }catch (err){
               console.log(err)
                 throw err.message;
@@ -65,7 +46,8 @@ export default {
         },
           
     // mainRecipes: require('components/mainPage/mainRecipes.vue').default
-  }
+  },
+
 }
 </script>
 

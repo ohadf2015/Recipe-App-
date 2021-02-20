@@ -11,10 +11,11 @@ const instance = axios.create({
 
 export default {
 
-    async updateCategories(payload, context) {
+    async getUserRecipes(payload, context) {
         try {
-            console.log(payload, context)
-            const response = await instance.post('/', { user: user });
+            console.log(payload.userData, context)
+            const response = await instance.post('/', { user: payload.userData });
+            console.log(response)
             return response
         } catch (error) {
             throw error;

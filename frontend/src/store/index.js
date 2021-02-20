@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import authModule from './modules/auth.js';
-import recipesModule from './modules/recipes/index.js';
+import authModule from './modules/auth';
+import recipesModule from './modules/recipes';
 import categoriesModule from './modules/categories';
 import usersModule from './modules/user';
 // import example from './module-example'
