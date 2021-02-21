@@ -4,7 +4,7 @@
    <q-btn class="recipes-center" :to="recipe.to" flat>
             <q-avatar rounded size="170px" font-size="40px">
          <q-img :src="`${recipe.img}`" style="max-width: 370px; height: 350px;">
-           <div class="absolute-full text-subtitle2 flex flex-center">
+           <div class="absolute-full text-subtitle1 flex flex-center">
            {{ recipe.name }}
           </div>
           <q-btn flat round color="red" icon="favorite_border" size="sm" />
@@ -20,6 +20,7 @@
 <script>
 
 export default {
+  
   props:['recipesRow'],
   data () {
     return {
