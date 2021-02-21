@@ -2,8 +2,7 @@ import recipes from '../../api/Recipes'
 
 
 const state = () => ({
-    userId: null,
-    token: null
+
 })
 
 // getters
