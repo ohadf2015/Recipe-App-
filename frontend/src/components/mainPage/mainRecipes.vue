@@ -1,29 +1,27 @@
 <template>
  <div class="row fit justify q-col-gutter-md-start recipes-center q-gutter-md q-col-gutter-md no-wrap">
  <div v-for="recipe in recipesRow" :key="recipe.name">
-   <q-btn class="recipes-center" :to="`main/${recipe._id}`" flat>
-            <q-avatar rounded size="170px" font-size="40px">
-         <q-img :src="`${recipe.img}`" style="max-width: 370px; height: 350px;">
-          <q-btn flat round color="red-1" icon="favorite_border" size="sm" />         
-          <div class="absolute-full text-subtitle1 text-center"> <br>{{ recipe.name }}</div>
-          </q-img>
-            </q-avatar>  
-        </q-btn>
-        <br>
-        <br>
+  <recipeComponent v-bind:recipeCard="recipe"/>
         </div>
         </div>
-    
+         
 </template>
 
 <script>
+import recipeComponent from './recipeComponent'
 
 export default {
+  
   props:['recipesRow'],
   data () {
     return {
+      recipeCard:null,
     // recipesRow:this.recipesRow
     }
+  },
+   components: {
+   recipeComponent
+    // checkOut: require('components/mainPage /checkOut.vue').default,
   },
   computed:{
  
