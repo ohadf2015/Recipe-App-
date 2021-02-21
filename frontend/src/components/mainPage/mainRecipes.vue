@@ -1,7 +1,7 @@
 <template>
  <div class="row fit justify q-col-gutter-md-start recipes-center q-gutter-md q-col-gutter-md no-wrap">
  <div v-for="recipe in recipesRow" :key="recipe.name">
-   <q-btn class="recipes-center" :to="`main/${recipe.id}`" flat>
+   <q-btn class="recipes-center" :to="`main/${recipe._id}`" flat>
             <q-avatar rounded size="170px" font-size="40px">
          <q-img :src="`${recipe.img}`" style="max-width: 370px; height: 350px;">
           <q-btn flat round color="red-1" icon="favorite_border" size="sm" />         
@@ -13,7 +13,7 @@
         <br>
         </div>
         </div>
-          </div>
+    
 </template>
 
 <script>

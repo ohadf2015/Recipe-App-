@@ -72,7 +72,6 @@ export default {
     },
     beforeUpdate() {
       //console.log(JSON.stringify(this.$route))
-       console.log(this.checked_categories)
     },
     methods:{
         async fetchCat(){

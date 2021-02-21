@@ -16,6 +16,15 @@ export default {
         }
 
     },
+    async getRecipe(payload, context) {
+        try {
+            const response = await instance.get(`/recipes/${payload}`);
+            return response.data.data
+        } catch (error) {
+            throw error;
+        }
+
+    },
 
 
 
