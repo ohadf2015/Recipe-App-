@@ -12,4 +12,3 @@ exports.getCategories = async(req, res, next) => {
 
     }
 }
-

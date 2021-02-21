@@ -1,18 +1,11 @@
-import axios from 'axios';
-const instance = axios.create({
-    baseURL: 'http://localhost:5000/api/auth',
-    timeout: 1000,
-    headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json'
-    }
-})
+import baseConfig from './baseConfig';
+const instance = baseConfig.getAxiosObj()
 
 export default {
 
     async loginUser(payload) {
         try {
-            const response = await instance.post('/login', {
+            const response = await instance.post('/auth/login', {
                 email: payload.email,
                 password: payload.password
             });
@@ -27,7 +20,7 @@ export default {
     async regUser(payload) {
 
         try {
-            const response = await instance.post('/register', {
+            const response = await instance.post('/auth/register', {
                 fullname: payload.fullname,
                 email: payload.email,
                 password: payload.password

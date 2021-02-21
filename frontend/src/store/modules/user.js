@@ -9,17 +9,13 @@ const state = () => ({
 const getters = {
 
     getUserData(state) {
-        return state.user;
+        return getUserDataFromStorage()
     },
     getUserCategories(state) {
-        return state.user.categories;
+        const categories = getUserDataFromStorage().categories;
+        return categories
     },
-    // getToken(state) {
-    //     return state.token;
-    // },
-    // isAuthenticated(state) {
-    //     return state.token;
-    // }
+
 
 }
 
@@ -29,8 +25,14 @@ const actions = {
     async updateCategories(context, payload) {
         const res = await user.updateCategories(payload)
         if (res) {
-            // console.log(res)
-            context.commit('setUserCategories', payload)
+            context.commit('setUserCategories', res)
+        }
+        return res
+    },
+    async updateFavorites(context, payload) {
+        const res = await user.updateFavorites(payload)
+        if (res) {
+            context.commit('setUserFavorites', res)
         }
         return res
     }
@@ -42,15 +44,31 @@ const mutations = {
 
     setUserData(state, payload) {
         state.user = payload.user;
-        // localStorage.setItem('userId', state.userid);
-        // localStorage.setItem('token', state.token);
+        updateUserDataInStorage(state.user)
+
     },
     setUserCategories(state, payload) {
         state.user.categories = payload.updateCat;
-        // localStorage.setItem('userId', state.userid);
-        // localStorage.setItem('token', state.token);
+
+        updateUserDataInStorage(state.user)
+
+    },
+    setUserFavorites(state, payload) {
+        state.user.favorites = payload.favorites;
+        updateUserDataInStorage(state.user)
+
     },
 
+}
+
+
+function updateUserDataInStorage(data) {
+    localStorage.setItem('user', JSON.stringify(data));
+
+}
+
+function getUserDataFromStorage() {
+    return JSON.parse(localStorage.getItem('user'))
 }
 
 export default {

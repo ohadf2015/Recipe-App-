@@ -4,6 +4,7 @@
         size="140"
         label="Search"
         bg-color="grey-1"
+        color="orange"
         class="flex flex-center"
         color="orange"
         focus>
@@ -24,5 +25,7 @@ export default {
 </script>
 
 <style scoped>
-
+.q-input{
+  color: black;
+}
 </style>
