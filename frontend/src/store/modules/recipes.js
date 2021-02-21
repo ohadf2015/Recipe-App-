@@ -24,16 +24,16 @@ const actions = {
     async getUserRecipes(context, payload) {
         const res = await recipes.getUserRecipes(payload)
         if (res) {
-            context.commit('setRecipes', res.data)
+            context.commit('setRecipes', res)
         }
-        return res.data
+        return res
     },
 }
 
 // mutations
 const mutations = {
     setRecipes(state, payload) {
-        state.recipes = payload.data;
+        state.recipes = payload;
     }
 }
 

@@ -13,7 +13,7 @@ export default {
     async getCategories() {
         try {
             const response = await instance.get('/getCategories');
-            return response
+            return response.data.data
         } catch (error) {
             throw error;
         }

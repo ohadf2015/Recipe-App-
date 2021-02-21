@@ -32,7 +32,7 @@ const actions = {
             // console.log(res)
             context.commit('setUserCategories', payload)
         }
-        return res.data
+        return res
     }
 
 }

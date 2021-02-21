@@ -15,10 +15,11 @@ const getters = {
 const actions = {
     async getCategories(context) {
         const res = await categories.getCategories();
+        console.log(res)
         if (res) {
-            context.commit("setCategories", res.data);
+            context.commit("setCategories", res);
         }
-        return res.data;
+        return res;
     }
 };
 

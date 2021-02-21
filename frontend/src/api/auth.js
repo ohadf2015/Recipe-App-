@@ -16,7 +16,7 @@ export default {
                 email: payload.email,
                 password: payload.password
             });
-            return response
+            return response.data
         } catch (error) {
             throw error;
         }
@@ -32,7 +32,7 @@ export default {
                 email: payload.email,
                 password: payload.password
             });
-            return response
+            return response.data
         } catch (error) {
 
             throw error;

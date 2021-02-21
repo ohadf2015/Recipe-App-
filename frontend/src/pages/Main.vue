@@ -3,7 +3,7 @@
   <div class="q-pa-md" v-for="row in recipesRows" :key="row.name">
     <div>
     <p class="row">{{row.name}}</p>
-      <mainRecipes v-bind="row.recipes"/>
+      <mainRecipes v-bind:recipesRow="row.recipes"/>
       </div>
     <div class="border-top">
         <br>

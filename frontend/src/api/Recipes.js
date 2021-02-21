@@ -15,8 +15,7 @@ export default {
         try {
             console.log(payload.userData, context)
             const response = await instance.post('/', { user: payload.userData });
-            console.log(response)
-            return response
+            return response.data.data
         } catch (error) {
             throw error;
         }

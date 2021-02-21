@@ -20,7 +20,7 @@ export default {
                 userId: payload.id,
                 categories: payload.updateCat
             });
-            return response
+            return response.data
         } catch (error) {
             throw error;
         }

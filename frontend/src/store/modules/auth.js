@@ -27,17 +27,17 @@ const actions = {
     async loginUser(context, payload) {
         const res = await auth.loginUser(payload)
         if (res) {
-            context.commit('setUser', res.data)
-            context.commit('setUserData', res.data)
+            context.commit('setUser', res)
+            context.commit('setUserData', res)
         }
-        return res.data
+        return res
     },
 
 
     async regUser(context, payload) {
         const res = await auth.regUser(payload)
         if (res) {}
-        return res.data
+        return res
     }
 }
 
