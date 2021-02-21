@@ -34,9 +34,16 @@ const routes = [{
           { path: '/myProfile', component: () => import('pages/menu/MyProfile.vue') },
           { path: '/settings', component: () => import('pages/menu/Settings.vue') },
           { path: '/gingerbreadWaffles', component: () => import('pages/recipes/GingerbreadWaffles.vue')},
-          { path: '/topItalianPizza', component: () => import('pages/recipes/TopItalianPizza.vue')}
+          { path: '/topItalianPizza', component: () => import('pages/recipes/TopItalianPizza.vue')},
+          { path: '/main/:id', component: () => import('pages/recipe.vue'),
+             props: true,
+                children: [
+                { path:'review',component: ()=> import('pages/review.vue')}
+            ]}
         ]
     },
+
+
     // Always leave this as last one,
     // but you can also remove it
     {

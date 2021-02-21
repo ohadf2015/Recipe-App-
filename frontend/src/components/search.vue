@@ -1,10 +1,10 @@
 <template>
     <q-input
-        rounded outlined v-model.trim="text"
+        rounded standout v-model.trim="text"
         size="140"
         label="Search"
         bg-color="grey-1"
-        color="black-10"
+        color="orange"
         class="flex flex-center"
         focus>
     <template v-slot:append>
