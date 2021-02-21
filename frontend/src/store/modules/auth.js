@@ -10,13 +10,13 @@ const state = () => ({
 const getters = {
 
     getUserId(state) {
-        return state.userId;
+        return localStorage.getItem('userId', state.userId);
     },
     getToken(state) {
-        return state.token;
+        return localStorage.getItem('token', state.token);
     },
     isAuthenticated(state) {
-        return state.token;
+        return localStorage.getItem('token', state.token);
     }
 
 }
@@ -47,12 +47,15 @@ const mutations = {
     logout(state) {
         state.userId = null;
         state.token = null;
+        localStorage.setItem('userId', state.userid);
+        localStorage.setItem('token', state.token);
     },
 
     setUser(state, payload) {
+        console.log(payload)
         state.token = payload.token;
         state.userId = payload.userid;
-        localStorage.setItem('userId', state.userid);
+        localStorage.setItem('userId', state.userId);
         localStorage.setItem('token', state.token);
     },
 

@@ -1,18 +1,12 @@
-import axios from 'axios';
-const instance = axios.create({
-    baseURL: 'http://localhost:5000/api/categories',
-    timeout: 1000,
-    headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Content-Type': 'application/json'
-    }
-})
+import baseConfig from './baseConfig';
+const instance = baseConfig.getAxiosObj()
+console.log(instance)
 
 export default {
 
     async getCategories() {
         try {
-            const response = await instance.get('/getCategories');
+            const response = await instance.get('categories/getCategories');
             return response.data.data
         } catch (error) {
             throw error;

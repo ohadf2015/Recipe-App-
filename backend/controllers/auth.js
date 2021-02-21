@@ -2,7 +2,7 @@ const usermodel = require('../models/users');
 const crypto = require('crypto');
 const errorResponse = require('../utils/errorResponse');
 const sendmsg = require('../utils/sendMessage');
-
+const { getUnpackedSettings } = require('http2');
 // #desc: Register user
 // #route GET api/auth/register
 exports.register = async(req, res, next) => {
@@ -57,7 +57,7 @@ const sendTokenRes = (user, status, res) => {
     const token = user.getSignedJwtToken();
     const opts = {
         expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000),
-        httpOnly: true
+        httpOnly: false
 
     }
     if (process.env.NODE_ENV === 'production') {
@@ -77,8 +77,6 @@ exports.myAccount = async(req, res, next) => {
         data: user
     })
 }
-
-
 
 exports.forgotPass = async(req, res, next) => {
     const user = await usermodel.findOne({ email: req.body.email });
