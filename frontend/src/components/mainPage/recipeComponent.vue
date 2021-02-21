@@ -1,7 +1,7 @@
 <template>
  <div class="row fit justify q-col-gutter-md-start recipes-center q-gutter-md q-col-gutter-md no-wrap">
  <!-- <div v-for="recipe in recipeCard" :key="recipe.name"> -->
-   <q-btn class="recipes-center" :to="`main/${recipeCard.id}`" flat>
+   <q-btn class="recipes-center" :to="`main/${recipeCard._id}`" flat>
             <q-avatar rounded size="170px" font-size="40px">
          <q-img :src="`${recipeCard.img}`" style="max-width: 370px; height: 350px;">
            <div class="absolute-full text-subtitle1 flex flex-center">
