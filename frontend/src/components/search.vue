@@ -6,7 +6,6 @@
         bg-color="grey-1"
         color="orange"
         class="flex flex-center"
-        color="orange"
         focus>
     <template v-slot:append>
       <q-icon v-if="text !== ''" name="close" @click="text =''" class="cursor-pointer"/>
