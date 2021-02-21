@@ -4,6 +4,7 @@
         size="140"
         label="Search"
         bg-color="grey-1"
+        color="black-10"
         class="flex flex-center"
         focus>
     <template v-slot:append>
@@ -23,5 +24,7 @@ export default {
 </script>
 
 <style scoped>
-
+.q-input{
+  color: black;
+}
 </style>

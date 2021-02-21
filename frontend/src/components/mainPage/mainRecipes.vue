@@ -1,5 +1,12 @@
 <template>
- <div class="row fit justify q-col-gutter-md-start recipes-center q-gutter-md q-col-gutter-md no-wrap">
+    <div>
+      <div>
+      <div v-for="item in allRecipes" :key="item.name">
+          <h4>{{item.name}}</h4>
+          <rowComponent/>
+
+
+ <!-- <div class="row fit justify q-col-gutter-md-start recipes-center q-gutter-md q-col-gutter-md no-wrap">
  <div v-for="recipe in recipesRow" :key="recipe.name">
    <q-btn class="recipes-center" :to="recipe.to" flat>
             <q-avatar rounded size="170px" font-size="40px">
@@ -13,18 +20,23 @@
         </q-btn>
         <br>
         <br>
-        </div>
+        <div class="border-bottom"></div>
+      </div> -->
+        </div> 
         </div>
 </template>
 
 <script>
 
 export default {
-  props:['recipesRow'],
+  inject: ["allRecipes"],
   data () {
     return {
     // recipesRow:this.recipesRow
     }
+  },
+  components: {
+    rowComponent: require('components/mainPage/rowComponent.vue').default
   },
   computed:{
  
@@ -35,8 +47,12 @@ export default {
     }
 </script>
 
-<style lang="sass" scoped>
-.my-card
-  width: 100%
-  max-width: 300px
+<style>
+.row {
+    color: gainsboro;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.border-bottom {
+  border-top: 3px solid rgb(243, 137, 15);
+}
 </style>

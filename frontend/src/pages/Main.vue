@@ -1,5 +1,10 @@
 <template class ="auto-tabs">
-<div class="fff">
+<div class="bg">
+  <div class="q-pa-md">
+     <mainRecipes/>
+    </div>
+  </div>
+<!-- <div class="fff">
   <div class="q-pa-md" v-for="row in recipesRows" :key="row.name">
     <div>
     <p class="row">{{row.name}}</p>
@@ -10,7 +15,8 @@
 
       </div>
       </div>
-      </div>
+      </div> -->
+
 </template>
 
 <script>
@@ -43,27 +49,23 @@ export default {
               console.log(err)
                 throw err.message;
             }
-        },
           
-    // mainRecipes: require('components/mainPage/mainRecipes.vue').default
+        },
+ 
+     provide() {
+    return {
+      allRecipes: this.allRecipes
+    };
+  },
+
+          
   },
 
 }
 </script>
 
 <style scoped>
-.recipe-cell {
-    color: orange;
-}
-p {
-    color: gainsboro;
-    font-size: 20px;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-.border-top {
-  border-top: 3px solid rgb(243, 137, 15);
-}
-.fff {
+.bg {
   /* background-color: radial-gradient(farthest-corner at 95% 30%,black,grey); */
   background-color: black ;
 }
@@ -73,5 +75,5 @@ p {
    min-width: 800px;
    background-color: black;
 }
-
 </style>
+
