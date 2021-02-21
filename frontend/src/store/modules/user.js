@@ -16,12 +16,6 @@ const getters = {
         return categories
     },
 
-    // getToken(state) {
-    //     return state.token;
-    // },
-    // isAuthenticated(state) {
-    //     return state.token;
-    // }
 
 }
 
@@ -31,7 +25,14 @@ const actions = {
     async updateCategories(context, payload) {
         const res = await user.updateCategories(payload)
         if (res) {
-            context.commit('setUserCategories', payload)
+            context.commit('setUserCategories', res)
+        }
+        return res
+    },
+    async updateFavorites(context, payload) {
+        const res = await user.updateFavorites(payload)
+        if (res) {
+            context.commit('setUserFavorites', res)
         }
         return res
     }
@@ -44,15 +45,18 @@ const mutations = {
     setUserData(state, payload) {
         state.user = payload.user;
         updateUserDataInStorage(state.user)
-            // localStorage.setItem('userId', state.userid);
-            // localStorage.setItem('token', state.token);
+
     },
     setUserCategories(state, payload) {
         state.user.categories = payload.updateCat;
 
         updateUserDataInStorage(state.user)
-            // localStorage.setItem('userId', state.userid);
-            // localStorage.setItem('token', state.token);
+
+    },
+    setUserFavorites(state, payload) {
+        state.user.favorites = payload.favorites;
+        updateUserDataInStorage(state.user)
+
     },
 
 }
