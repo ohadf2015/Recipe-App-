@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import mainRecipes from '../components/mainPage/mainRecipes.vue'
+import mainRecipes from '../components/mainPage/mainRecipes'
 export default {
   data () {
     return {
