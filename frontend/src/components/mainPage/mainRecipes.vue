@@ -33,6 +33,8 @@ export default {
     }
 </script>
 
-<style>
-
+<style lang="sass" scoped>
+.my-card
+  width: 100%
+  max-width: 300px
 </style>
