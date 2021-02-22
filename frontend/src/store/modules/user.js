@@ -9,6 +9,7 @@ const state = () => ({
 const getters = {
 
     getUserData(state) {
+        console.log(getUserDataFromStorage())
         return getUserDataFromStorage()
     },
     getUserCategories(state) {
@@ -25,7 +26,7 @@ const actions = {
     async updateCategories(context, payload) {
         const res = await user.updateCategories(payload)
         if (res) {
-            context.commit('setUserCategories', res)
+            context.commit('setUserCategories', payload)
         }
         return res
     },
@@ -68,6 +69,7 @@ function updateUserDataInStorage(data) {
 }
 
 function getUserDataFromStorage() {
+    console.log();
     return JSON.parse(localStorage.getItem('user'))
 }
 
