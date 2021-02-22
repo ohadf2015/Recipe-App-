@@ -24,6 +24,7 @@ const getters = {
 const actions = {
 
     async getUserRecipes(context, payload) {
+        console.log(payload)
         const res = await recipes.getUserRecipes(payload)
         if (res) {
             context.commit('setRecipes', res)

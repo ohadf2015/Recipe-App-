@@ -15,3 +15,20 @@ exports.updateUserCategory = async(req, res, next) => {
     await user.save();
     res.status(200).json({ success: true });
 };
+
+
+
+exports.updateUserFavorites = async(req, res, next) => {
+    console.log(req.body.userId);
+    if (!req.body.userId) {
+        console.log(req.body);
+        return next(new errorResponse(`${req.body.favorites}`, 404));
+    }
+    const user = await usermodel.findOne({ _id: req.body.userId });
+    if (!user) {
+        return next(new errorResponse("No user with that id", 404));
+    }
+    user.favorites = req.body.favorites;
+    await user.save();
+    res.status(200).json({ success: true });
+};
