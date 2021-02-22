@@ -1,5 +1,5 @@
 <template>
- <div class="row fit justify q-col-gutter-md-start recipes-center q-gutter-md q-col-gutter-md no-wrap">
+ <div class="row fit justify q-col-gutter-md-start recipes-center">
  <div v-for="recipe in recipesRow" :key="recipe.name">
   <recipeComponent v-bind:recipeCard="recipe"/>
         </div>

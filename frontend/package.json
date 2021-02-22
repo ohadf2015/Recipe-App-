@@ -17,6 +17,7 @@
     "lottie-vuejs": "^0.1.0",
     "lottie-web": "^5.7.6",
     "quasar": "^1.0.0",
+    "vue-lottie": "^0.2.1",
     "vue3-carousel": "^0.1.10"
   },
   "devDependencies": {
