@@ -2,12 +2,15 @@ import recipes from '../../api/Recipes'
 
 
 const state = () => ({
-
+    recipe: null,
+    recipes: null
 })
 
 // getters
 const getters = {
-
+    getRecipeData(state) {
+        return state.recipe;
+    },
     getRecipes(state) {
         return state.recipes;
     },
@@ -27,12 +30,23 @@ const actions = {
         }
         return res
     },
+    async getRecipe(context, payload) {
+        const res = await recipes.getRecipe(payload)
+        if (res) {
+            console.log(res)
+            context.commit('setRecipe', res)
+        }
+        return res
+    },
 }
 
 // mutations
 const mutations = {
     setRecipes(state, payload) {
         state.recipes = payload;
+    },
+    setRecipe(state, payload) {
+        state.recipe = payload;
     }
 }
 

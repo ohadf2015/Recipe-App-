@@ -1,6 +1,5 @@
 import baseConfig from './baseConfig';
 const instance = baseConfig.getAxiosObj()
-console.log(instance)
 
 
 export default {
