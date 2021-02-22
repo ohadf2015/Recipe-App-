@@ -1,37 +1,54 @@
  <template> 
-  <div class="q-pa-md" v-if="rec&&!loading">
-     <q-img :src="`${rec.img}`" style="max-width: 370px; height: 350px;">
+  
+  <div class="q-pa-md flex flex-center" v-if="rec&&!loading">
+    <div class="q-pa-md">
+     <q-img :src="`${rec.img}`" style="max-width: 500px; height: 350px;">
         <div class="absolute-bottom text-subtitle1 text-center">
         {{rec.name}}
         </div>
       </q-img>
       <!-- <p q-gutter-md flex col-12>{{description}}</p> -->
-      <div class="q-pa-md">
-        <div class="row no-wrap items-center">
+      
+     
+        <div class="row no-wrap items-center flex flex-center">
            <q-icon name="star" color="orange" />
            <span class="text-caption text-grey q-ml-sm">{{rec.rating.toFixed(2)}} ({{rec.ratingCount}})</span>
                 <q-btn flat round color="red" icon="favorite" />
                 <q-btn flat round color="teal" icon="comment" />
                 <q-btn flat round color="white" icon="share" />
         </div>
-          <q-item-section>
+          <q-item-section class="flex flex-center">
             <q-item-label>Total time : {{rec.totalTime}} min</q-item-label>
             <q-item-label> {{rec.calories}}</q-item-label>
           </q-item-section>
-          <h6 class="text-orange">Ingredients: </h6>
+          
+          <h4 class="text-orange flex flex-center"><strong>Ingredients: </strong></h4>
           <div v-for="ingrid in rec.recipeIngredient" :key="ingrid.id">
             <br>
-               {{ingrid}}
-          </div>
-            <h6 class="text-orange">Instructions: </h6>
+            <div class="flex flex-center">
+            <q-list dark bordered separator class="flex flex-center" style="min-width: 350px; width:350px;">
+                  <q-item clickable v-ripple>
+                <q-item-section> {{ingrid}} </q-item-section>
+              </q-item>
+            </q-list>
+            </div>
+              </div>
+        
+            <h4 class="text-orange flex flex-center"><strong>Instructions: </strong></h4>
             <ul v-for="instruction in rec.recipeInstructions" :key="instruction.id">
-              <li class="text-orange-9">{{instruction.text}}</li>
+                          <br>
+            <div class="flex flex-center">
+            <q-list dark bordered separator class="flex flex-center" style="min-width: 440px; width: 440px;">
+                  <q-item clickable v-ripple>
+                <q-item-section> {{instruction.text}} </q-item-section>
+              </q-item>
+            </q-list>
+            </div>
             </ul>
-      </div>
-      <br> 
-      <div>
+             <div>
         <router-view></router-view>
-        <router-link to="c1/review">Add a Review</router-link>
+        <router-link  class="flex flex-center" to="c1/review"><q-btn color="orange" icon="mail" label="Add a Review" /></router-link>
+      </div>
       </div>
 </div>
 <div v-else>
