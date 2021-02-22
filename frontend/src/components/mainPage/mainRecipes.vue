@@ -1,5 +1,5 @@
 <template>
- <div class="row fit justify q-col-gutter-md-start recipes-center q-gutter-md q-col-gutter-md no-wrap">
+ <div class="row fit justify q-col-gutter-md-start recipes-center">
  <div v-for="recipe in recipesRow" :key="recipe.name">
   <recipeComponent v-bind:recipeCard="recipe"/>
         </div>
@@ -16,12 +16,10 @@ export default {
   data () {
     return {
       recipeCard:null,
-    // recipesRow:this.recipesRow
     }
   },
    components: {
    recipeComponent
-    // checkOut: require('components/mainPage /checkOut.vue').default,
   },
   computed:{
  
@@ -37,3 +35,4 @@ export default {
   width: 100%
   max-width: 300px
 </style>
+

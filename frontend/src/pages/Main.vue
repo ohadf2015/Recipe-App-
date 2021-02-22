@@ -26,11 +26,9 @@ export default {
   
     created(){      
        this.fetchRecipes()
-
     },
   components: {
    mainRecipes
-    // checkOut: require('components/mainPage /checkOut.vue').default,
   },
 
  
@@ -45,8 +43,6 @@ export default {
                 throw err.message;
             }
         },
-          
-    // mainRecipes: require('components/mainPage/mainRecipes.vue').default
   },
 
 }
