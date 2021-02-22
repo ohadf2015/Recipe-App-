@@ -5,7 +5,7 @@ const _ = require("lodash");
 // #desc: Get All Recipes
 // #route GET api/recipes
 
-const mainPageRecipesFields = { name: 1, recId: 1, rating: 1, img: 1 }
+const mainPageRecipesFields = { name: 1, RecId: 1, rating: 1, img: 1, recipeCategory: 1 }
 exports.getRecipes = async(req, res, next) => {
     try {
         const recipes = await recpmodel.find();
@@ -51,9 +51,9 @@ exports.getUserRecipes = async(req, res, next) => {
 getTopRecipes = async() => {
     try {
         let recipes = await recpmodel
-            .find({}, { name: 1, recId: 1, rating: 1, img: 1 })
+            .find({}, mainPageRecipesFields)
             .sort({ ratingCount: -1, rating: -1 })
-            .limit(50);
+            .limit(120);
         recipes = _.sampleSize(recipes, 10);
         return recipes;
     } catch (err) {
@@ -64,9 +64,21 @@ getTopRecipes = async() => {
 getRecipesByCategories = async(data) => {
     try {
         let recipes = await recpmodel
-            .find({ recipeCategory: { $in: data.categories } }, mainPageRecipesFields)
+            .find({}, mainPageRecipesFields)
             .sort({ ratingCount: -1, rating: -1 })
-            .limit(50);
+            .limit(1000);
+        recipes = recipes.filter((recipe) => {
+            let flag = false
+            for (const recipeCategory of recipe.recipeCategory) {
+                if (_.indexOf(data.categories, recipeCategory) != -1) {
+                    flag = true
+                    break
+                }
+            }
+            return flag
+
+        })
+
         recipes = _.sampleSize(recipes, 10);
         return recipes;
     } catch (err) {
