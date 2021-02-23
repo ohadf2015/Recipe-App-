@@ -6,7 +6,6 @@
            <div class="absolute-full text-subtitle1 flex flex-center">
           <div class="absolute-top flex flex-center">
                <div class="absolute-top flex flex-center">
-               <q-btn v-model="user_like" :value="recipeCard.name" flat round color="red" icon="favorite_border" size="sm" />
                </div>
                <br>
                {{ recipeCard.name }}
@@ -15,6 +14,10 @@
           </q-img>
         </q-avatar>  
         </q-btn>
+         <q-btn v-if="liked" @click="toggleLike(recipeCard.name)"  flat round color="red" 
+         icon="favorite" size="sm" />
+         <q-btn v-if="!liked" @click="toggleLike(recipeCard.name)"  flat round color="red" 
+         icon="favorite_border" size="sm" />
         <br>
         </div>
        
@@ -29,36 +32,30 @@ export default {
   data () {
     return {
       liked:false,
-      likesCount:null,
       user_likes:[]
     }
   },
   computed:{
-    // user_likes: function()
-    // {
-    //     if(this.liked) {
-    //         this.liked = true;
-    //         let userId=this.$route.params.id
-    //         console.log(userId)
-    //     } else {
-    //         this.liked = false;
-    //     }
-    //     this.liked ? this.likesCount++ : this.likesCount--;
-    // }
+
         },
 
     created () {
       console.log(this.recipeCard)
     },
     beforeUpdate() {
-      console.log(this.user_likes)
+      console.log("user_like"+this.user_likes)
     },
   methods: {
-        // toggleLike: function() {
-        //     this.liked = ! this.liked;
-
-        //     this.liked ? this.likesCount++ : this.likesCount--;
-        // }
+        toggleLike(name) {
+          console.log("recpie name "+ name);
+            this.liked = ! this.liked;
+            if(this.liked){
+              this.user_likes.push(name);
+            }
+            else
+            this.user_likes.splice(0,1)
+          console.log(this.user_likes)
+        }
     
   } 
 }   
