@@ -6,7 +6,7 @@
            <div class="absolute-full text-subtitle1 flex flex-center">
           <div class="absolute-top flex flex-center">
                <div class="absolute-top flex flex-center">
-              
+               <q-btn v-model="user_like" :value="recipeCard.name" flat round color="red" icon="favorite_border" size="sm" />
                </div>
                <br>
                {{ recipeCard.name }}
@@ -60,6 +60,8 @@ export default {
         
 </script>
 
-<style>
-
+<style scoped>
+.div{
+  font-family:Comic Sans MS;
+}
 </style>
