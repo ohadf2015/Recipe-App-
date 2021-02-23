@@ -122,6 +122,9 @@ export default {
         }
   },
   methods:{
+    handleAnimation(){
+	    	this.defaultAnim = Anim
+	      },
         async login(){
         if (!this.email || !this.email.includes('@')) {
         this.$refs.email.focus();
