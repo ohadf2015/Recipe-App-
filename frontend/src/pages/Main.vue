@@ -2,19 +2,21 @@
 <div class="fff">
   <div class="q-pa-md" v-for="row in recipesRows" :key="row.name">
     <div>
-    <p class="row">{{row.name}}</p>
+    <h4 class="row">{{row.name}}</h4>
       <mainRecipes v-bind:recipesRow="row.recipes"/>
       </div>
+      <br>
     <div class="border-top">
-        <br>
-
       </div>
       </div>
+      <!-- <search/> -->
       </div>
 </template>
 
 <script>
 import mainRecipes from '../components/mainPage/mainRecipes'
+// import Search from '../components/search.vue'
+
 export default {
   data () {
     return {
@@ -29,8 +31,16 @@ export default {
     },
   components: {
    mainRecipes
+    // Search
   },
-
+  computed:{
+    
+    getRecipes(){
+      return this.$store.getters['getRecipes'].filter(item => {
+      return item.name.toLowerCase().includes(this.textSearch.toLowerCase())
+      })
+     }
+    },
  
   methods: {
         async fetchRecipes(){

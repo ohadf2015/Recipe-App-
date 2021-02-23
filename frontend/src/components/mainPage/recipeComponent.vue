@@ -1,5 +1,5 @@
 <template>
- <div class="row fit justify q-pa-md q-gutter-md">
+ <div class="row fit justify q-gutter-xs">
    <q-btn class="button" :to="`main/${recipeCard._id}`" flat>
             <q-avatar rounded size="170px" font-size="40px">
          <q-img :src="`${recipeCard.img}`" style="max-width: 370px; height: 350px;">
@@ -69,7 +69,7 @@ export default {
 }
 .q-btn{
         background-color: none;
-        border-radius: 12px;
+        border-radius: 10px;
         
 }
 .button {

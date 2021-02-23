@@ -38,8 +38,8 @@
         </template>
         <div v-else>
         <lottie :options="defaultOptions" 
-        :width="600" 
-        :height="800" 
+        :width="300" 
+        :height="500" 
         @animCreated="handleAnimation"/>
         </div>
         <div class="row q-mb-md">

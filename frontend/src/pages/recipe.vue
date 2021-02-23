@@ -51,9 +51,10 @@
       </div>
 </div>
 <div v-else>
-  <lottie :options="defaultOptions" 
- :width="800" 
- :height="1000" 
+  <lottie :options="defaultOptions"
+ :width="500" 
+ :height="900" 
+ class="lottie"
  @animCreated="handleAnimation"/>
 </div>
 </template>
@@ -105,6 +106,9 @@ export default {
 .q-img{
   border-radius:15%;
 }
-
+.lottie {
+   position: static;
+   top: 10px;
+}
 
 </style>
