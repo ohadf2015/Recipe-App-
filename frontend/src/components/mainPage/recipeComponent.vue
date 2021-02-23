@@ -1,12 +1,11 @@
 <template>
- <div class="row fit justify q-col-gutter-md-start recipes-center q-pa-md q-gutter-md">
+ <div class="row fit justify q-col-gutter-md-start recipes-center q-pa-md ">
    <q-btn class="recipes-center" :to="`main/${recipeCard._id}`" flat>
             <q-avatar rounded size="170px" font-size="40px">
          <q-img :src="`${recipeCard.img}`" style="max-width: 370px; height: 350px;">
            <div class="absolute-full text-subtitle1 flex flex-center">
           <div class="absolute-top flex flex-center">
                <div class="absolute-top flex flex-center">
-               <q-btn v-model="user_like" :value="recipeCard.name" flat round color="red" icon="favorite_border" size="sm" />
                </div>
                <br>
                {{ recipeCard.name }}
@@ -15,7 +14,10 @@
           </q-img>
         </q-avatar>  
         </q-btn>
-         <q-btn @click="toggleLike(recipeCard.name)" flat round color="red" icon="favorite_border" size="sm" />
+         <q-btn v-if="liked" @click="toggleLike(recipeCard.name)"  flat round color="red" 
+         icon="favorite" size="sm" />
+         <q-btn v-if="!liked" @click="toggleLike(recipeCard.name)"  flat round color="red" 
+         icon="favorite_border" size="sm" />
         <br>
         </div>
        
