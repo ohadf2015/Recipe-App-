@@ -1,5 +1,4 @@
  <template> 
-  
   <div class="q-pa-md flex flex-center" v-if="rec&&!loading">
     <div class="q-pa-md">
      <q-img :src="`${rec.img}`" style="max-width: 500px; height: 350px; ">

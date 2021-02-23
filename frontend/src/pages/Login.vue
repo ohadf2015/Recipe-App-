@@ -1,5 +1,5 @@
 <template>
- <div class="auto-tabs">
+ <div class="auto-tabs" v-if="!loading">
     <div class="flex flex-center">
       <img src="~/assets/logoSYR.png" width="250px" height="200px"/>
     </div>
@@ -76,8 +76,20 @@
           />
     <p class="text-white flex flex-center">&copy; Spot Your Recipes</p>
   </div>
+
+<div v-else>
+  <lottie :options="defaultOptions" 
+    :width="500" 
+    :height="700" 
+    @animCreated="handleAnimation"/>
+  </div>
 </template>
+
 <script>
+
+import Lottie from 'vue-lottie'
+import  Anim from '../assets/animations/login.json'
+
 export default {
     data(){
         return{
@@ -85,10 +97,31 @@ export default {
             pass:'',
             isValid:true,
             rm:false,
-            isPwd:true
-        }
+            isPwd:true,
+            loading: true,
+            defaultOptions:{
+            animationData:Anim,//Json data to be used
+            render:'svg',//The form to be rendered
+            loop:true,//Is it redundant
+            autoplay:true,// Whether to start automatically
+        },
+	       	defaultAnim :''
+       }
     },
-    methods:{
+    components: {
+      Lottie
+    },
+    created(){
+      setTimeout(
+      ()=> this.loading = false,// enable the input
+        4000)
+      },
+      computed:{
+        rec(){
+        return this.$store.getters['getRecipeData']
+        }
+  },
+  methods:{
         async login(){
         if (!this.email || !this.email.includes('@')) {
         this.$refs.email.focus();
