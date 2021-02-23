@@ -1,5 +1,5 @@
 <template>
- <div class="row fit justify q-col-gutter-md-start recipes-center q-pa-md ">
+ <div class="row fit justify q-col-gutter-md-start recipes-center q-pa-md">
    <q-btn class="recipes-center" :to="`main/${recipeCard._id}`" flat>
             <q-avatar rounded size="170px" font-size="40px">
          <q-img :src="`${recipeCard.img}`" style="max-width: 370px; height: 350px;">

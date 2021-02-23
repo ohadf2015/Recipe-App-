@@ -2,7 +2,7 @@
   
   <div class="q-pa-md flex flex-center" v-if="rec&&!loading">
     <div class="q-pa-md">
-     <q-img :src="`${rec.img}`" style="max-width: 500px; height: 350px;">
+     <q-img :src="`${rec.img}`" style="max-width: 500px; height: 350px; ">
         <div class="absolute-bottom text-subtitle1 text-center">
         {{rec.name}}
         </div>
@@ -18,8 +18,8 @@
                 <q-btn flat round color="white" icon="share" />
         </div>
           <q-item-section class="flex flex-center">
-            <q-item-label>Total time : {{rec.totalTime}} min</q-item-label>
-            <q-item-label> {{rec.calories}}</q-item-label>
+            <q-item-label>Total time : {{rec.totalTimeVal}} min</q-item-label>
+            <q-item-label> {{rec.nutrition.calories}}</q-item-label>
           </q-item-section>
           
           <h4 class="text-orange flex flex-center"><strong>Ingredients: </strong></h4>
@@ -102,3 +102,10 @@ export default {
   }
 }
 </script>
+<style>
+.q-img{
+  border-radius:15%;
+}
+
+
+</style>
