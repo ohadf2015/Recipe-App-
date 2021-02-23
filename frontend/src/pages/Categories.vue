@@ -17,7 +17,7 @@
         </q-banner>
       </div>
       <q-form @submit.prevent="onSubmit">
-        <template v-if="hascatego">
+        <template v-if="hascatego&&!loading">
           <div class="q-pa-md text-white">
             <div class="q-gutter-md flex col-12 flex-center">
                   <div v-for ="item in getCategories" :key="item.name">
@@ -36,6 +36,12 @@
             </div>
           </div>
         </template>
+        <div v-else>
+        <lottie :options="defaultOptions" 
+        :width="600" 
+        :height="800" 
+        @animCreated="handleAnimation"/>
+        </div>
         <div class="row q-mb-md">
           <q-btn v-if="checked_categories.length>2" class="col q-gutter-mb-xs flex-center "
                   text-color="black"
@@ -51,13 +57,26 @@
 </template>
 
 <script>
+import Lottie from 'vue-lottie'
+import  Anim from '../assets/animations/mainLoading.json'
 export default {
     data() {
         return {
             searchCategory: '',
             hascatego:false,
-            checked_categories: null
+            checked_categories: null,
+            loading: true,
+            defaultOptions:{
+            animationData:Anim,//Json data to be used
+            render:'svg',//The form to be rendered
+            loop:true,//Is it redundant
+            autoplay:true,// Whether to start automatically
+            },
+            defaultAnim :''
         }
+      },
+    components: {
+      Lottie
     },
     computed:{
     getCategories(){
@@ -69,11 +88,17 @@ export default {
     created(){
         this.fetchCat();
         this.checked_categories=this.$store.getters['getUserCategories']
+        setTimeout(
+        ()=> this.loading = false,// enable the input
+        4000)
     },
     beforeUpdate() {
       //console.log(JSON.stringify(this.$route))
     },
     methods:{
+       handleAnimation(){
+	    	this.defaultAnim = Anim
+	      },
         async fetchCat(){
             try{
                 await this.$store.dispatch('getCategories');
@@ -112,9 +137,10 @@ export default {
           },3000);
       }
     }
-    }
+  }
 }
 </script>
+
 <style scoped>
 .auto-tabs {
     max-width: 45%;

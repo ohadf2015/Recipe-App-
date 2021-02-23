@@ -3,7 +3,7 @@
    <q-btn class="recipes-center" :to="`main/${recipeCard._id}`" flat>
             <q-avatar rounded size="170px" font-size="40px">
          <q-img :src="`${recipeCard.img}`" style="max-width: 370px; height: 350px;">
-           <div class="absolute-full text-subtitle1 flex flex-center">
+           <div class="absolute-full text-subtitle1 flex flex-center" style=" font-family:Verdana; max-width:300px; text-shadow: 2px 2px 5px yellow;">
           <div class="absolute-top flex flex-center">
                <div class="absolute-top flex flex-center">
                </div>
@@ -14,9 +14,9 @@
           </q-img>
         </q-avatar>  
         </q-btn>
-         <q-btn v-if="liked" @click="toggleLike(recipeCard.name)"  flat round color="red" 
+         <q-btn v-if="liked" @click="toggleLike(recipeCard._id)"  flat round color="red" 
          icon="favorite" size="sm" />
-         <q-btn v-if="!liked" @click="toggleLike(recipeCard.name)"  flat round color="red" 
+         <q-btn v-if="!liked" @click="toggleLike(recipeCard._id)"  flat round color="red" 
          icon="favorite_border" size="sm" />
         <br>
         </div>
@@ -46,11 +46,11 @@ export default {
       console.log("user_like"+this.user_likes)
     },
   methods: {
-        toggleLike(name) {
+        toggleLike(id) {
           console.log("recpie name "+ name);
             this.liked = ! this.liked;
             if(this.liked){
-              this.user_likes.push(name);
+              this.user_likes.push(id);
             }
             else
             this.user_likes.splice(0,1)
@@ -64,6 +64,6 @@ export default {
 
 <style scoped>
 .div{
-  font-family:Comic Sans MS;
+ font-family: "Lucida Console"
 }
 </style>
