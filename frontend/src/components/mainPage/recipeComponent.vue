@@ -1,8 +1,8 @@
 <template>
- <div class="row fit justify q-col-gutter-md-start recipes-center q-pa-md q-gutter-md">
-   <q-btn class="recipes-center" :to="`main/${recipeCard._id}`" flat>
+ <div class="row fit justify q-pa-md q-gutter-md">
+   <q-btn class="button" :to="`main/${recipeCard._id}`" flat>
             <q-avatar rounded size="170px" font-size="40px">
-         <q-img :src="`${recipeCard.img}`" style="max-width: 370px; height: 350px;">
+         <q-img :src="`${recipeCard.img}`" class="button" style="max-width: 370px; height: 350px;">
            <div class="absolute-full text-subtitle1 flex flex-center">
           <div class="absolute-top flex flex-center">
                <div class="absolute-top flex flex-center">
@@ -68,5 +68,22 @@ export default {
 <style scoped>
 .div{
   font-family:Comic Sans MS;
+  font-size: 16px;
+}
+.q-btn{
+        background-color: none;
+        border-radius: 12px;
+        
+}
+.button {
+  /* transition-duration: 0.4s; */
+  border-radius: 12px;
+  text-align: center;
+}
+
+.button:hover {
+ box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+  background-color: #0c0a0a7a; /* Green */
+  color: white;
 }
 </style>

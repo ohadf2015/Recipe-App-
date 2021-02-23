@@ -62,7 +62,7 @@ p {
 }
 .fff {
   /* background-color: radial-gradient(farthest-corner at 95% 30%,black,grey); */
-  background-color: black ;
+  background-color: white ;
 }
 .auto-tabs {
    max-width: 1500px;
