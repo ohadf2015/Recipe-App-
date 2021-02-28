@@ -2,19 +2,19 @@ import user from '../../api/userData'
 
 
 const state = () => ({
-    user: null,
+    user: getUserDataFromStorage()?getUserDataFromStorage():null,
 })
 
 // getters
 const getters = {
-
+    favorites(state){
+    return state.user.favorites
+    },
     getUserData(state) {
-        console.log(getUserDataFromStorage())
-        return getUserDataFromStorage()
+         return getUserDataFromStorage()
     },
     getUserCategories(state) {
-        const categories = getUserDataFromStorage().categories;
-        return categories
+        return state.user.categories
     },
 
 
@@ -23,17 +23,21 @@ const getters = {
 // actions
 const actions = {
 
-    async updateCategories(context, payload) {
+    async updateCategories({commit}, payload) {
         const res = await user.updateCategories(payload)
         if (res) {
-            context.commit('setUserCategories', payload)
+            commit('setUserCategories', payload)
         }
         return res
     },
-    async updateFavorites(context, payload) {
+    async updateFavorites({commit}, payload) {
+
+    
+       
         const res = await user.updateFavorites(payload)
         if (res) {
-            context.commit('setUserFavorites', res)
+        commit('setUserFavorites', payload)
+          console.log('update success')
         }
         return res
     }
@@ -55,7 +59,10 @@ const mutations = {
 
     },
     setUserFavorites(state, payload) {
-        state.user.favorites = payload.favorites;
+        
+            state.user.favorites=payload.favorites
+            console.log(state.user.favorites.length)
+        
         updateUserDataInStorage(state.user)
 
     },
@@ -65,6 +72,7 @@ const mutations = {
 
 function updateUserDataInStorage(data) {
     localStorage.setItem('user', JSON.stringify(data));
+    console.log(localStorage.getItem('user'))
 
 }
 

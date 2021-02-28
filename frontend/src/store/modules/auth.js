@@ -24,13 +24,13 @@ const getters = {
 // actions
 const actions = {
 
-    async loginUser(context, payload) {
+    async loginUser({commit}, payload) {
         const res = await auth.loginUser(payload)
         if (res) {
-            context.commit('setUser', res)
-            context.commit('setUserData', res)
+            commit('setUser', res)
+            commit('setUserData', res)
         }
-        return res
+        return res  
     },
 
 

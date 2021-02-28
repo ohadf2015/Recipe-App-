@@ -16,7 +16,8 @@ const getters = {
     },
     hasRecipes(state) {
         return state.recipes && state.recipes.length > 0
-    }
+    },
+
 
 }
 
@@ -27,6 +28,15 @@ const actions = {
         console.log(payload)
         const res = await recipes.getUserRecipes(payload)
         if (res) {
+            console.log(res)
+            context.commit('setRecipes', res)
+        }
+        return res
+    },
+    async getUserFavorites(context, payload) {
+        const res = await recipes.getUserFavorites(payload)
+        if (res) {
+            console.log(res)
             context.commit('setRecipes', res)
         }
         return res

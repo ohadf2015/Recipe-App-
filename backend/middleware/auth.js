@@ -7,7 +7,7 @@ exports.protect = async(req, res, next) => {
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         token = req.headers.authorization.split(' ')[1];
         console.log(token)
-    } else if (req.cookies.token) {
+    }  if (req.cookies.token) {
         token = req.cookies.token;
     }
     if (!token) {
@@ -20,6 +20,8 @@ exports.protect = async(req, res, next) => {
         next();
 
     } catch (err) {
-        return next(new ErrorRespone('Not authorize to access this route', 401));
+        
+        return next(new ErrorRespone('Not authorize to access this route', 401))
+
     }
 }

@@ -10,7 +10,7 @@
           <!-- Menu  -->
           <div class="q-pa-md">
               <div class="q-gutter-md">
-                <q-btn color="orange-8" style="width: 50px;" icon="menu">
+                <q-btn color="orange-8" style="width: 3rem;" icon="menu">
                   <q-menu fit>
                     <q-list class="auto-style" style="min-width: 300px">
                       <q-item
@@ -50,30 +50,31 @@
 <!-- Full screen Navigator (BP=767) - include all Usr favorite Recipes -->
     <q-drawer
       v-model="leftDrawerOpen"
-      :breakpoint="767"
-      :width="300"
+      :breakpoint="750"
+      :width="120"
       bordered
       content-class="bg-black-10"
+      class="border-right"
     >
-    <br>
+   
     <q-item
     to="/main"
-    clickable>
+    clickable class="q-m-none">
      <q-img
           class="flex flex-center"
           src="~assets/logof.png"
         />
         </q-item>
       <q-list dark>
-        <q-item-label class="flex flex-center"></q-item-label>
 <!-- Array for all Favorite Recipes -->
-        <q-item
-          to="/myRecipes"
-          class="text-grey-4"
+        <q-item 
+          class="text-grey-4 q-mt-xl"
           exact
-          clickable>
-          <q-item-section>
-            <q-item-label><h6 class="text-orange flex flex-center">Liked Recipes <q-icon name="favorite" color="orange"/></h6></q-item-label>
+          clickable
+          @click="$router.push('myRecipes')"> 
+       
+          <q-item-section class="text-center">
+             <q-icon name="o_book" style="font-size: 4.4em;" color="orange" />
           </q-item-section>
         </q-item>
         <!-- <q-item
@@ -230,13 +231,19 @@ export default {
   .q-drawer {
     .q-router-link--exact-active {
       color: #c18523 !important;
+
     }
+  }
+  .border-left{
+      border-left: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
+
   }
   .auto-style {
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     margin: auto;
   }
   .header {
+    z-index: 9999999999;
     height: 100px;
     margin: auto;
     padding: 20px;

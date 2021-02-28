@@ -25,6 +25,15 @@ export default {
         }
 
     },
+    async getUserFavorites(payload, context) {
+        try {
+            const response = await instance.post(`/recipes/getUserFavorites`,{favorites:payload.favorites});
+            return response.data.data
+        } catch (error) {
+            throw error;
+        }
+
+    },
 
 
 

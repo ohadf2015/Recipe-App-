@@ -1,5 +1,6 @@
 # # #!/usr/bin/env python
 # # # coding: utf-8
+
 print('hi from python')
 import os
 from typing import Literal
@@ -32,7 +33,6 @@ from pyspark.sql.functions import coalesce, explode
 # if os.path.exists('./json') and os.path.isdir('./json'):
 #     shutil.rmtree('./json')
 
-
 print('reading data...')
 recipes_ratings=spark.read.csv(
     path=abs_file_path,
@@ -41,7 +41,7 @@ recipes_ratings=spark.read.csv(
     quote='"',
     inferSchema=True,
 )
-
+recipes_ratings.show()
 
 rel_path2 = "../data/newRatings.csv"
 abs_file_path = os.path.join(script_dir, rel_path2)
@@ -57,13 +57,15 @@ newRatings=spark.read.csv(
 
 df = spark.read.format("mongo").load()
 df.createOrReplaceTempView("newSysRatings")
-usersChoices=spark.sql('SELECT recommandationId as userId,5 as rating,categories FROM newSysRatings ')
-usersChoices=usersChoices.select(usersChoices.userId,usersChoices.rating,explode(usersChoices.categories))
-usersChoices=usersChoices.withColumnRenamed('col', 'recipId')
-
-usersChoices.show()
+usersChoices=spark.sql('SELECT recommandationId as userId,5 as rating,favorites FROM newSysRatings ')
+usersChoices=usersChoices.select(usersChoices.userId,usersChoices.rating,explode(usersChoices.favorites))
+usersChoices=usersChoices.withColumnRenamed('col', 'recipeId')
+recipes_ratings.printSchema()
 recipes_ratings = recipes_ratings.union(usersChoices)
 
+recipes_ratings=recipes_ratings.dropna(how='any')
+
+recipes_ratings.where(recipes_ratings.userId > 1400000).show()
 newSysUsers=usersChoices.select("userId").distinct()
 
 

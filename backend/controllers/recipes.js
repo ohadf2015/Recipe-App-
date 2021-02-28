@@ -18,7 +18,7 @@ exports.getRecipes = async(req, res, next) => {
 // #route GET api/recipes/:id
 exports.getRecipeWithID = async(req, res, next) => {
     try {
-        const recp = await recpmodel.findById(req.params.id);
+        const recp = await recpmodel.findOne({RecId:req.params.id});
         res.status(200).json({ success: true, data: recp });
     } catch (err) {
         //res.status(400).json({ success: false });
@@ -38,10 +38,10 @@ exports.getUserRecipes = async(req, res, next) => {
         const basedOnUserCategories = await getRecipesByCategories(data);
         const tenMin = await getTenMinRecipes();
 
-        finalArr.push({ name: "Top Recipes", recipes: topRecipes });
-        finalArr.push({ name: "Based on your categories choices", recipes: basedOnUserCategories });
-        finalArr.push({ name: "Recently added", recipes: newestRecipes });
-        finalArr.push({ name: "Ten minutes recipes!", recipes: tenMin });
+        finalArr.push({ name: "Top Recipes",icon:"grade", recipes: topRecipes });
+        finalArr.push({ name: "Based on your categories choices",icon:"thumbs_up_down", recipes: basedOnUserCategories });
+        finalArr.push({ name: "Recently added",icon:"fiber_new", recipes: newestRecipes });
+        finalArr.push({ name: "10 minutes recipes!",icon:"alarm", recipes: tenMin });
         res.status(200).json({ success: true, data: finalArr });
     } catch (err) {
         res.status(400).json({ success: false });
@@ -112,4 +112,25 @@ getNewestRecipes = async(req, res, next) => {
     } catch (err) {
         res.status(400).json({ success: false });
     }
+};
+
+
+exports.getUserFavorites = async(req, res, next) => {
+    console.log(req.body)
+    if (!req.body.favorites) {
+        console.log(req.body);
+        return next(new errorResponse(`${req.body.favorites}`, 404));
+    }
+    const favorites=req.body.favorites
+    try {
+        let recipes = await recpmodel
+            .find({RecId:{$in:favorites}}, mainPageRecipesFields)
+            .sort({ ratingCount: -1, rating: -1 })
+        
+            let finalArr=[]
+            finalArr.push({name:"My Favorite Recipes",icon:"favorite",recipes:recipes})
+            res.status(200).json({ success: true, data: finalArr });
+    } catch (err) {
+        res.status(400).json({ success: false });
+    };
 };

@@ -1,6 +1,7 @@
  <template> 
   <div class="q-pa-md flex flex-center" v-if="rec&&!loading">
     <div class="q-pa-md">
+
      <q-img :src="`${rec.img}`" style="max-width: 500px; height: 350px; ">
         <div class="absolute-bottom text-subtitle1 text-center">
         {{rec.name}}
@@ -50,11 +51,20 @@
       </div>
       </div>
 </div>
+
+
+
 <div v-else>
+  <transition
+  appear
+  enter-active-class="animated fadeIn"
+  leave-active-class="animated fadeOut"
+>
   <lottie :options="defaultOptions" 
- :width="800" 
- :height="1000" 
+  :width="width"
+  :height="height"
  @animCreated="handleAnimation"/>
+ </transition>
 </div>
 </template>
 <script>
@@ -68,9 +78,13 @@ export default {
 			animationData:Anim,//Json data to be used
 			render:'svg',//The form to be rendered
 			loop:true,//Is it redundant
-			autoplay:true,// Whether to start automatically
+			autoplay:true,
+   
+      // Whether to start automatically
 		},
-		defaultAnim :''
+		defaultAnim :'',
+      height:window.innerHeight/1.5,
+      width:window.innerWidth/1.5
     }
   },
   components: {
@@ -80,7 +94,7 @@ export default {
  this.fetchRecipe()
   setTimeout(
    ()=> this.loading = false,// enable the input
-    4000)
+    2500)
   },
   computed:{
     rec(){

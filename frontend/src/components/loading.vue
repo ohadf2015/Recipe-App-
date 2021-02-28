@@ -17,7 +17,7 @@
   import * as animationData from './assets/pinjump.json';
  
   export default {
-    name: 'app',
+ 
     components: {
       'lottie': Lottie
     },

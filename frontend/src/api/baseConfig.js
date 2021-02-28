@@ -3,10 +3,12 @@ export default {
     getAxiosObj() {
         const base = axios.create({
             baseURL: 'http://localhost:5000/api/',
-            timeout: 5000,
+            withCredentials: true,
+             credentials: 'include',
             headers: {
                 'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                "Authorization": "Bearer my-token",
             },
 
         })
@@ -14,3 +16,5 @@ export default {
     }
 
 }
+
+// timeout: 10000,

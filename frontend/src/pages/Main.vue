@@ -1,74 +1,101 @@
 <template class ="auto-tabs">
-<div class="fff">
-  <div class="q-pa-md" v-for="row in recipesRows" :key="row.name">
-    <div>
-    <p class="row">{{row.name}}</p>
-      <mainRecipes v-bind:recipesRow="row.recipes"/>
+  <div class="main-recipes">
+    <div class="col-12" v-for="row in recipesRows" :key="row.name">
+      <div class="row q-pb-lg q-ml-md q-mt-sm">
+        <p class="sticky">
+          {{ row.name }}
+          <q-icon :name="row.icon" color="orange" style="font-size: 2.5rem" />
+        </p>
       </div>
-    <div class="border-top">
-        <br>
-
+      <recipesRow
+        class="row q-gutter-x-sm q-gutter-y-md justify-evenly q-mb-md"
+        v-bind:recipesRow="row.recipes"
+      />
+      <div class="col-12 q-mb-md q-mt-md">
+        <hr />
       </div>
-      </div>
-      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import mainRecipes from '../components/mainPage/mainRecipes'
+import {mapGetters} from 'vuex'
+import recipesRow from "../components/mainPage/recipesRow";
 export default {
-  data () {
+  data() {
     return {
-      recipesRows:null,
-    
+      recipesRows: null,
+    };
+  },
+  computed:{
+...mapGetters(['favorites'])
+  },
+  created() {
+    this.fetchRecipes();
+  },
+
+  components: {
+    recipesRow,
+  },
+  watch:{
+   $route (to, from){
+       this.fetchRecipes()
     }
   },
-  
-  
-    created(){      
-       this.fetchRecipes()
-    },
-  components: {
-   mainRecipes
-  },
-
- 
   methods: {
-        async fetchRecipes(){
-            try{
-             const userData=await this.$store.getters['getUserData']
-            await this.$store.dispatch('getUserRecipes',{userData});
-               this.recipesRows= this.$store.getters['getRecipes'] // this.hascatego = true;
-            }catch (err){
-              console.log(err)
-                throw err.message;
-            }
-        },
+    async fetchRecipes() {
+      try {
+        const userData = this.$store.getters["getUserData"];
+        if (this.$route.path == "/main") {
+          await this.$store.dispatch("getUserRecipes", { userData });
+        } else if (this.$route.path == "/myRecipes") {
+           await this.$store.dispatch("getUserFavorites", { favorites:this.favorites});
+        }
+        this.recipesRows = this.$store.getters["getRecipes"];
+        // this.hascatego = true;
+      } catch (err) {
+        console.log(err);
+        throw err.message;
+      }
+    },
   },
-
-}
+};
 </script>
 
 <style scoped>
 .recipe-cell {
-    color: orange;
-}
-p {
-    color: gainsboro;
-    font-size: 20px;
-    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-}
-.border-top {
-  border-top: 3px solid rgb(243, 137, 15);
-}
-.fff {
-  /* background-color: radial-gradient(farthest-corner at 95% 30%,black,grey); */
-  background-color: rgb(14, 13, 13) ;
-}
-.auto-tabs {
-   max-width: 1500px;
-   margin: 0 auto;
-   min-width: 800px;
-   background-color: black;
+  color: orange;
 }
 
+p {
+  color: rgb(255, 255, 255);
+  font-size: 2rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 400;
+  max-width: 60vh;
+}
+hr {
+  border: 0;
+  height: 2px;
+  background: #333;
+  /* background-image: linear-gradient(to right, #ccc, #333, #ccc); */
+  background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+}
+
+.auto-tabs {
+  max-width: 100vh;
+  margin: 0 auto;
+  padding: 0;
+  min-width: 90vh;
+}
+.main-recipes {
+  background: rgb(24, 24, 24);
+  background: linear-gradient(
+    90deg,
+    rgb(0, 0, 0) 0%,
+    rgb(22, 22, 22) 32%,
+    rgb(0, 0, 0) 86%
+  );
+  /* background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%); */
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
- <div class="auto-tabs" v-if="!loading">
+ <div class="auto-tabs">
     <div class="flex flex-center">
       <img src="~/assets/logoSYR.png" width="250px" height="200px"/>
     </div>
@@ -77,18 +77,10 @@
     <p class="text-white flex flex-center">&copy; Spot Your Recipes</p>
   </div>
 
-<div v-else>
-  <lottie :options="defaultOptions" 
-    :width="500" 
-    :height="700" 
-    @animCreated="handleAnimation"/>
-  </div>
 </template>
 
 <script>
 
-import Lottie from 'vue-lottie'
-import  Anim from '../assets/animations/login.json'
 
 export default {
     data(){
@@ -98,18 +90,10 @@ export default {
             isValid:true,
             rm:false,
             isPwd:true,
-            loading: true,
-            defaultOptions:{
-            animationData:Anim,//Json data to be used
-            render:'svg',//The form to be rendered
-            loop:true,//Is it redundant
-            autoplay:true,// Whether to start automatically
-        },
-	       	defaultAnim :''
+         
        }
     },
     components: {
-      Lottie
     },
     created(){
       setTimeout(
@@ -169,7 +153,7 @@ export default {
         });
               setTimeout(()=>{
 this.$router.replace('/categories');
-               },3000);
+               },1000);
                 
             }
         }

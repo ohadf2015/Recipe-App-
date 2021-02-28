@@ -17,6 +17,19 @@ export default {
         }
 
     },
+    async updateFavorites(payload, context) {
+        try {
+            console.log(payload, context)
+            const response = await instance.post('/userData/updateUserFavorites', {
+                userId: payload.userId,
+                favorites: payload.favorites
+            });
+            return response.data
+        } catch (error) {
+            throw error;
+        }
+
+    },
 
 
 

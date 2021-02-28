@@ -1,9 +1,9 @@
 <template>
- <div class="row fit justify q-col-gutter-md-start recipes-center">
- <div v-for="recipe in recipesRow" :key="recipe.name">
-  <recipeComponent v-bind:recipeCard="recipe"/>
+<div>
+ <div class="col-xs-4 col-sm-3 col-md-2 col-lg-2 col-xl-1 " v-for="recipe in recipesRow" :key="recipe.name" >
+  <recipeComponent  v-bind:recipeCard="recipe"/>
         </div>
-        </div>
+    </div>  
          
 </template>
 
@@ -21,12 +21,7 @@ export default {
    components: {
    recipeComponent
   },
-  computed:{
- 
-     },
-    created () {
-      console.log(this.recipesRow)
-    }
+
     }
 </script>
 

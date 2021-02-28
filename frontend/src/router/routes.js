@@ -27,14 +27,12 @@ const routes = [{
         component: () => import('layouts/MainFinal.vue'),
         children: [
           { path: '/main', component: () => import('pages/Main.vue') },
-          { path: '/myRecipes', component: () => import('pages/menu/MyRecipes.vue') },
+          { path: '/myRecipes', component: () => import('pages/Main.vue') },
           { path: '/helpAndFeedback', component: () => import('pages/menu/HelpAndFeedback.vue') },
           { path: '/myMessenger', component: () => import('pages/menu/MyMessenger.vue') },
           { path: '/myNotifications', component: () => import('pages/menu/MyNotifications.vue') },
           { path: '/myProfile', component: () => import('pages/menu/MyProfile.vue') },
           { path: '/settings', component: () => import('pages/menu/Settings.vue') },
-          { path: '/gingerbreadWaffles', component: () => import('pages/recipes/GingerbreadWaffles.vue')},
-          { path: '/topItalianPizza', component: () => import('pages/recipes/TopItalianPizza.vue')},
           { path: '/main/:id', component: () => import('pages/recipe.vue'),
              props: true,
                 children: [
