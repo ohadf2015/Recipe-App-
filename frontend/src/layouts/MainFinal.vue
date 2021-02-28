@@ -120,6 +120,12 @@ export default {
       search: '',
       menu: [
         {
+          id: 0,
+          label: 'Home',
+          icon: 'home',
+          to: '/main'
+        },
+        {
           id: 1,
           label: 'My Recipes',
           icon: 'favorite',
@@ -127,36 +133,12 @@ export default {
         },
         {
           id: 2,
-          label: 'See your profile',
-          icon: 'face',
-          to: '/myProfile'
-        },
-        {
-          id: 3,
-          label: 'Messenger',
-          icon: 'mail',
-          to: '/myMessenger'
-        },
-        {
-          id: 4,
-          label: 'Notifications',
-          icon: 'notifications_active',
-          to: '/myNotifications'
-        },
-        {
-          id: 5,
-          label: 'Settings',
-          icon: 'settings',
-          to: '/settings'
-        },
-        {
-          id: 6,
           label: 'Log Out',
           icon: 'logout',
           to: '/'
         },
         {
-          id: 7,
+          id: 3,
           label: 'Help & Feedback',
           icon: 'help',
           to: '/helpAndFeedback'
@@ -184,13 +166,13 @@ export default {
           to: '/myRecipes'
         },
          {
-          id: 3,
+          id: 2,
           label: 'Home',
           icon: 'home',
           to: '/main'
         },
         {
-          id: 2,
+          id: 3,
           label: 'Logout',
           icon: 'logout',
           to: '/'

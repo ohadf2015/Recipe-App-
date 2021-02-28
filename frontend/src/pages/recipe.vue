@@ -55,6 +55,7 @@
 
 
 <div v-else>
+<<<<<<< HEAD
   <transition
   appear
   enter-active-class="animated fadeIn"
@@ -63,6 +64,12 @@
   <lottie :options="defaultOptions" 
   :width="width"
   :height="height"
+=======
+  <lottie :options="defaultOptions"
+ :width="500" 
+ :height="900" 
+ class="lottie"
+>>>>>>> c728326cc8f48aa8f92af6724ff297fa8d02fe92
  @animCreated="handleAnimation"/>
  </transition>
 </div>
@@ -119,6 +126,9 @@ export default {
 .q-img{
   border-radius:15%;
 }
-
+.lottie {
+   position: static;
+   top: 10px;
+}
 
 </style>
