@@ -36,15 +36,6 @@
             </div>
           </div>
         </template>
-<<<<<<< HEAD
-=======
-        <div v-else>
-        <lottie :options="defaultOptions" 
-        :width="300" 
-        :height="500" 
-        @animCreated="handleAnimation"/>
-        </div>
->>>>>>> c728326cc8f48aa8f92af6724ff297fa8d02fe92
         <div class="row q-mb-md">
           <q-btn v-if="checked_categories.length>2" class="col q-gutter-mb-xs flex-center "
                   text-color="black"
