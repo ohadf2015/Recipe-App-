@@ -8,8 +8,18 @@ export default {
 
     async getUserRecipes(payload, context) {
         try {
-            // console.log(payload)
             const response = await instance.post('/recipes/', { userData: payload.userData });
+         
+            return response.data.data
+        } catch (error) {
+            throw error;
+        }
+
+    },
+    
+    async getMoreRecipes(payload, context) {
+        try {
+            const response = await instance.post('/recipes/more', { userData: payload.userData });
             return response.data.data
         } catch (error) {
             throw error;

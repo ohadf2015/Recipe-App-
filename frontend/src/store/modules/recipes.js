@@ -3,7 +3,9 @@ import recipes from '../../api/Recipes'
 
 const state = () => ({
     recipe: null,
-    recipes: null
+    recipes: null,
+    moreRecipes:null,
+    search:'',
 })
 
 // getters
@@ -17,6 +19,12 @@ const getters = {
     hasRecipes(state) {
         return state.recipes && state.recipes.length > 0
     },
+    getNewRow(state) {
+        return state.moreRecipes 
+    },
+    search(state) {
+        return state.search 
+    },
 
 
 }
@@ -25,18 +33,22 @@ const getters = {
 const actions = {
 
     async getUserRecipes(context, payload) {
-        console.log(payload)
         const res = await recipes.getUserRecipes(payload)
         if (res) {
-            console.log(res)
             context.commit('setRecipes', res)
+        }
+        return res
+    },
+    async getMoreRecipes(context, payload) {
+        const res = await recipes.getMoreRecipes(payload)
+        if (res) {
+            context.commit('setNewRowRecipes', res)
         }
         return res
     },
     async getUserFavorites(context, payload) {
         const res = await recipes.getUserFavorites(payload)
         if (res) {
-            console.log(res)
             context.commit('setRecipes', res)
         }
         return res
@@ -44,11 +56,11 @@ const actions = {
     async getRecipe(context, payload) {
         const res = await recipes.getRecipe(payload)
         if (res) {
-            console.log(res)
             context.commit('setRecipe', res)
         }
         return res
     },
+
 }
 
 // mutations
@@ -58,6 +70,12 @@ const mutations = {
     },
     setRecipe(state, payload) {
         state.recipe = payload;
+    },
+    setNewRowRecipes(state, payload) {
+        state.moreRecipes = payload;
+    },
+    setSearch(state, payload) {
+        state.search = payload;
     }
 }
 

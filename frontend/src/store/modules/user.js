@@ -11,11 +11,19 @@ const getters = {
     return state.user.favorites
     },
     getUserData(state) {
-         return getUserDataFromStorage()
+         getUserDataFromStorage()
+         return state.user
+    },
+    getUserName(state) {
+        return state.user.fullname
     },
     getUserCategories(state) {
         return state.user.categories
     },
+    hasNewRecommandations(state){
+        return (state.user.dateRecommendations &&
+         diffDays( Date.now(),state.user.dateRecommendations)<1)
+    }
 
 
 }
@@ -32,15 +40,22 @@ const actions = {
     },
     async updateFavorites({commit}, payload) {
 
-    
-       
         const res = await user.updateFavorites(payload)
         if (res) {
         commit('setUserFavorites', payload)
-          console.log('update success')
         }
         return res
-    }
+    },
+
+    async checkNewRecs({commit}, payload) {
+        const res = await user.checkNewRecs(payload)
+        if (res) {
+            commit('setRecommendationsStatus',res)
+        }
+        return res
+    },
+
+
 
 }
 
@@ -61,25 +76,35 @@ const mutations = {
     setUserFavorites(state, payload) {
         
             state.user.favorites=payload.favorites
-            console.log(state.user.favorites.length)
         
         updateUserDataInStorage(state.user)
 
     },
+
+    setRecommendationsStatus(state,payload) {
+    state.user.dateRecommendations=payload.data
+    updateUserDataInStorage(state.user)
+
+},
+
 
 }
 
 
 function updateUserDataInStorage(data) {
     localStorage.setItem('user', JSON.stringify(data));
-    console.log(localStorage.getItem('user'))
 
 }
 
 function getUserDataFromStorage() {
-    console.log();
     return JSON.parse(localStorage.getItem('user'))
 }
+
+
+function diffDays(date, otherDate) {
+    const diffInDays = Math.abs(date - Date.parse(otherDate))/ (1000 * 60 * 60 * 24)
+   return diffInDays
+  }
 
 export default {
     namespaced: false,

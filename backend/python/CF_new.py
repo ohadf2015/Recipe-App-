@@ -21,12 +21,10 @@ spark=SparkSession.builder.appName("CF")\
     .config("spark.mongodb.input.collection", "users") \
     .config("spark.mongodb.output.uri", os.getenv("MONGO_URI")) \
     .config("spark.mongodb.output.collection", "recommandations") \
-    .config("spark.jars.packages", "org.mongodb.spark:mongo-spark-connector_2.12:2.4.3") \
+    .config("spark.jars.packages", "org.mongodb.spark:mongo-spark-connector_2.12:3.0.1") \
     .getOrCreate()
 from pyspark.sql.functions import coalesce, explode
 
-# spark.mongodb.input.uri=os.getenv("MONGO_URI")
-# spark.mongodb.input.collection="users"
 
 # delete old json
 # import shutil 
@@ -57,16 +55,16 @@ newRatings=spark.read.csv(
 
 df = spark.read.format("mongo").load()
 df.createOrReplaceTempView("newSysRatings")
-usersChoices=spark.sql('SELECT recommandationId as userId,5 as rating,favorites FROM newSysRatings ')
-usersChoices=usersChoices.select(usersChoices.userId,usersChoices.rating,explode(usersChoices.favorites))
-usersChoices=usersChoices.withColumnRenamed('col', 'recipeId')
-recipes_ratings.printSchema()
-recipes_ratings = recipes_ratings.union(usersChoices)
+# newRatings=spark.sql('SELECT recommandationId as userId,5 as rating,favorites FROM newSysRatings ')
+# newRatings=newRatings.select(newRatings.userId,newRatings.rating,explode(newRatings.favorites))
+# newRatings=newRatings.withColumnRenamed('col', 'recipeId')
+# recipes_ratings.printSchema()
+recipes_ratings = recipes_ratings.union(newRatings)
 
 recipes_ratings=recipes_ratings.dropna(how='any')
 
 recipes_ratings.where(recipes_ratings.userId > 1400000).show()
-newSysUsers=usersChoices.select("userId").distinct()
+newSysUsers=newRatings.select("userId").distinct()
 
 
 newSysUsers.show()
@@ -129,6 +127,8 @@ print('user recommandations were made')
 userSubsetRecs.show()
 # userSubsetRecs.toPandas().to_json('result.json', orient='records', force_ascii=False, lines=True)
 
+# best_model.save(spark, "./model")
+# sameModel = MatrixFactorizationModel.load(spark, "./model")
 # userSubsetRecs.coalesce(1).write.format('json').save('./json')
 userSubsetRecs.write.format('mongo').mode('overwrite').save()
 # user_recs.coalesce(1).write.format('json').save('./json')
@@ -191,8 +191,6 @@ print('done recommandations analysis')
 
 # recipes_ratings.join(recipes, "recipeID").show(3)
 
-# best_model.save(spark, "C:/Users/ohad/Desktop/lastCF_exp")
-# sameModel = MatrixFactorizationModel.load(spark, "C:/Users/ohad/Desktop/lastCF_exp")
 
 
 

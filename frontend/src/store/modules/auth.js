@@ -17,8 +17,8 @@ const getters = {
     },
     isAuthenticated(state) {
         return localStorage.getItem('token', state.token);
-    }
-
+    },
+ 
 }
 
 // actions
@@ -32,6 +32,13 @@ const actions = {
         }
         return res  
     },
+    async logout({commit}, payload) {
+        const res = await auth.logout(payload)
+        if (res) {
+            commit('logout')
+        }
+        return res  
+    },
 
 
     async regUser(context, payload) {
@@ -39,6 +46,14 @@ const actions = {
         if (res) {}
         return res
     }
+,
+async forgotPassword({commit}, payload) {
+    const res = await user.forgotPass(payload)
+    // if (res) {
+    //     commit('setRecommendationsStatus')
+    // }
+    return res
+},
 }
 
 // mutations
@@ -52,7 +67,6 @@ const mutations = {
     },
 
     setUser(state, payload) {
-        console.log(payload)
         state.token = payload.token;
         state.userId = payload.userid;
         localStorage.setItem('userId', state.userId);

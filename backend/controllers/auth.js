@@ -28,7 +28,6 @@ exports.register = async(req, res, next) => {
 exports.login = async(req, res, next) => {
     try {
         const { email, password } = req.body;
-        console.log(req.body);
         if (!email || !password) {
             return next(new errorResponse('one of field not valid!', 400));
         }
@@ -53,7 +52,6 @@ exports.login = async(req, res, next) => {
 
 }
 const sendTokenRes = (user, status, res) => {
-    console.log(JSON.stringify(user))
     const token = user.getSignedJwtToken();
     const opts = {
         expires: new Date(Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000),

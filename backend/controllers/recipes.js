@@ -1,17 +1,45 @@
 const recpmodel = require("../models/recipesmodels");
+const recomModel=require("../controllers/recommendations")
 const errorResponse = require("../utils/errorResponse");
 const usermodel = require("../models/users");
 const _ = require("lodash");
 // #desc: Get All Recipes
 // #route GET api/recipes
 
-const mainPageRecipesFields = { name: 1, RecId: 1, rating: 1, img: 1, recipeCategory: 1 }
+const mainPageRecipesFields = { name: 1, RecId: 1, rating: 1, img: 1, recipeCategory: 1,totalTimeVal:1}
 exports.getRecipes = async(req, res, next) => {
     try {
         const recipes = await recpmodel.find();
         res.status(200).json({ success: true, data: recipes });
     } catch (err) {
         res.status(400).json({ success: false });
+    }
+};
+exports.getMoreRecipes = async(req, res, next) => {
+    const data = req.body.userData
+    try {
+        let recipes = await recpmodel
+            .find({}, mainPageRecipesFields)
+            .sort({ ratingCount: -1, rating: -1 })
+            .limit(1000);
+        recipes = recipes.filter((recipe) => {
+            let flag = false
+            for (const recipeCategory of recipe.recipeCategory) {
+                if (_.indexOf(data.categories, recipeCategory) != -1) {
+                    flag = true
+                    break
+                }
+            }
+            return flag
+
+        })
+
+        recipes = _.sampleSize(recipes, 10);
+        res.status(200).json({ success: true, data: recipes });
+  
+    } catch (err) {
+        res.status(400).json({ success: false });
+        throw err
     }
 };
 // #desc: Get All Recipes
@@ -33,11 +61,14 @@ exports.getUserRecipes = async(req, res, next) => {
     try {
         let finalArr = [];
         const data = req.body.userData
+        const personalizedRecs=await getPersonalizedRecs(data);
         const topRecipes = await getTopRecipes();
         const newestRecipes = await getNewestRecipes();
         const basedOnUserCategories = await getRecipesByCategories(data);
         const tenMin = await getTenMinRecipes();
-
+if(personalizedRecs&&personalizedRecs.length>0){
+    finalArr.push({ name: "Personalized recommendations",icon:"assistant", recipes: topRecipes }); 
+}
         finalArr.push({ name: "Top Recipes",icon:"grade", recipes: topRecipes });
         finalArr.push({ name: "Based on your categories choices",icon:"thumbs_up_down", recipes: basedOnUserCategories });
         finalArr.push({ name: "Recently added",icon:"fiber_new", recipes: newestRecipes });
@@ -60,6 +91,23 @@ getTopRecipes = async() => {
         throw err;
     }
 };
+
+
+getPersonalizedRecs = async(data) => {
+    try {
+       let recommendations= await recomModel.getRecsById(data.recommandationId)
+       recommendations=recommendations.map(arr=>arr.recipeId)
+        let recipes = await recpmodel
+            .find({RecId:{$in:recommendations}}, mainPageRecipesFields)
+            .sort({ ratingCount: -1, rating: -1 })
+            .limit(10);
+        return recipes;
+    } catch (err) {
+        throw err;
+    }
+};
+
+
 
 getRecipesByCategories = async(data) => {
     try {
@@ -91,9 +139,9 @@ getRecipesByCategories = async(data) => {
 getTenMinRecipes = async() => {
     try {
         let recipes = await recpmodel
-            .find({ totalTimeVal: { $lte: 10 } }, mainPageRecipesFields)
+            .find({ totalTimeVal: { $lte: 10,$gt:0 } }, mainPageRecipesFields)
             .sort({ ratingCount: -1, rating: -1 })
-            .limit(50);
+            .limit(100);
         recipes = _.sampleSize(recipes, 10);
         return recipes;
     } catch (err) {
@@ -116,9 +164,7 @@ getNewestRecipes = async(req, res, next) => {
 
 
 exports.getUserFavorites = async(req, res, next) => {
-    console.log(req.body)
     if (!req.body.favorites) {
-        console.log(req.body);
         return next(new errorResponse(`${req.body.favorites}`, 404));
     }
     const favorites=req.body.favorites

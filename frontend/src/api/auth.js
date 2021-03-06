@@ -33,4 +33,16 @@ export default {
 
     },
 
+    async logout() {
+
+        try {
+            const response = await instance.get('/auth/logout');
+            return response.data
+        } catch (error) {
+
+            throw error;
+        }
+
+    },
+
 }

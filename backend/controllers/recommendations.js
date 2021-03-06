@@ -5,23 +5,31 @@ const colors = require("colors");
 // #route GET api/categories
 exports.getAllRecs = async (req, res, next) => {
   try {
-    const recommandations = await recsModel.find({}).limit(50);
-    console.log(recommandations);
-    res.status(200).json({ success: true, data: recommandations });
+    const recommendations = await recsModel.find({}).limit(50);
+    res.status(200).json({ success: true, data: recommendations });
   } catch (err) {
     res.status(400).json({ success: false });
   }
 };
 
-exports.getRecsById = async (req, res, next) => {
+exports.getRecsById = async (id) => {
   try {
-    const recommandations = await recsModel.findById(req.params.id);
-    res.status(200).json({ success: true, data: recommandations });
+    const recommendations = await recsModel.findOne({userId:id});
+    return recommendations.recommendations
   } catch (err) {
     //res.status(400).json({ success: false });
-    next(
-      new errorResponse(`Recipe not found with id of ${req.params.id}`),
-      404
-    );
+console.log(err)
   }
 };
+
+
+exports.getAllUsersIds = async (id) => {
+  try {
+    let users = await recsModel.find({},{userId:1});
+    users=users.map(arr=>{return arr.userId})
+    return users
+  } catch (err) {
+    //res.status(400).json({ success: false });
+console.log(err)
+}
+}

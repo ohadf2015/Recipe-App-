@@ -21,10 +21,68 @@
         <br>
         </div> -->
 
-  <q-card class="my-card border center col-12">
+  <q-card
+    class="col-12 my-card"
+  >
     <q-chip v-if="liked" id="badge">
-      <q-avatar icon="bookmark" color="orange" text-color="white" />
-      Bookmark
+      <q-avatar icon="bookmark" color="warning" text-color="black" />
+      favorite
+    </q-chip>
+    <q-img
+      :src="`${recipeCard.img}`"
+      :ratio="1"
+      @click="routeToRecipe()"
+      class="img-box"
+    >
+      <div class="absolute-bottom recipeName text-h6 text-center">
+        {{ recipeCard.name }}
+      </div>
+    </q-img>
+
+    <q-card-section class="card__overlay">
+      <div class="text-weight-large nameRecipe flex justify-around">
+        <div v-if="recipeCard.rating" class="rating ">
+        {{ recipeCard.rating.toFixed(2) }}
+        <q-icon name="star" color="black" />
+        </div>
+        <div class="time ">
+            <span v-if="recipeCard.totalTimeVal"> min</span>
+
+        {{ recipeCard.totalTimeVal?recipeCard.totalTimeVal:"Classified"}}
+      
+        <q-icon name="alarm" color="black" />
+        </div>
+      </div>
+
+      <div class="buttons q-mt-lg absolute-center">
+        <q-btn
+          v-if="liked"
+          @click="toggleLike()"
+          flat
+          round
+          color="black"
+          icon="bookmark"
+          size="lg"
+        />
+        <q-btn
+          v-if="!liked"
+          @click="toggleLike()"
+          flat
+          round
+          color="black"
+          icon="bookmark_border"
+          size="lg"
+        />
+      </div>
+    </q-card-section>
+  </q-card>
+
+  <!-- <q-card class="my-card border center col-12" v-if="liked&&route=='favorites'|| route=='main'">
+        <div class="color_overlay" @click="routeToRecipe()">      </div>
+        <div class="top"></div>
+    <q-chip v-if="liked" id="badge">
+      <q-avatar icon="bookmark" color="warning" text-color="white" />
+      favorite
     </q-chip>
     <q-img
       :src="`${recipeCard.img}`"
@@ -34,11 +92,15 @@
     >
     </q-img>
 
-    <div class="color_overlay" @click="routeToRecipe()"></div>
+
+  
+    
+
+   
     <div class="card__overlay col-12">
-      <p class="nameRecipe text-center">{{ recipeCard.name }}</p>
+          <p  class="nameRecipe text-center">{{ recipeCard.name }}</p>
       <q-btn
-        class="btn-pos col-12"
+        class="btn-pos "
         v-if="liked"
         @click="toggleLike()"
         flat
@@ -48,7 +110,7 @@
         size="lg"
       />
       <q-btn
-        class="btn-pos col-12"
+        class="btn-pos "
         v-if="!liked"
         @click="toggleLike()"
         flat
@@ -57,55 +119,52 @@
         icon="bookmark_border"
         size="lg"
       />
-  
-    </div>
-  </q-card>
+       </div>
+  </q-card> -->
 </template>
 
 <script>
 import { mapGetters } from "vuex";
 import { mapMutations } from "vuex";
-
 export default {
   props: ["recipeCard"],
   data() {
     return {
-      liked: false,
-    
+   
+      showLess: true,
+      overlay: true,
     };
   },
+
   computed: {
-    ...mapGetters(["favorites", "getUserId"]),
-  },
-  created() {
-    const RecId = this.favorites.find((arr) => arr == this.recipeCard.RecId);
-    this.liked = RecId ? true : false;
+    ...mapGetters(["getUserId", "getUserData","favorites"]),
    
+
+liked(){
+const RecId = this.favorites.find((arr) => arr == this.recipeCard.RecId);
+let liked = RecId ? true : false
+return liked
+}
   },
-  beforeUpdate() {},
+
+
   methods: {
-    ...mapMutations(['setUserFavorites']),
+    ...mapMutations(["setUserFavorites"]),
     toggleLike() {
-      if(this.$route.path == "/myRecipes"){
-      this.$destroy();
-
-      // remove the element from the DOM
-      this.$el.parentNode.removeChild(this.$el);
+      let updatedFavorites = [];
+      if (this.favorites.length > 0) {
+        updatedFavorites.push(...this.favorites);
       }
-    let updatedFavorites=[]
-    if(this.favorites.length>0){
-      updatedFavorites.push(...this.favorites)
-    }
 
-    this.liked = !this.liked;
-         if (this.liked) {
-           updatedFavorites.push(this.recipeCard.RecId);
-          } else {
-            updatedFavorites= this.favorites.filter((arr) => {
-              return arr != this.recipeCard.RecId
-            });
-        }
-      
+      // this.liked = !this.liked;
+      if (!this.liked) {
+        updatedFavorites.push(this.recipeCard.RecId);
+      } else {
+        updatedFavorites = this.favorites.filter((arr) => {
+          return arr != this.recipeCard.RecId;
+        });
+      }
+
       this.$store.dispatch("updateFavorites", {
         userId: this.getUserId,
         favorites: updatedFavorites,
@@ -122,6 +181,7 @@ export default {
 #badge {
   z-index: 100;
   top: 0;
+  font-size: 1.2rem;
   position: absolute;
   left: 0.1rem;
 }
@@ -130,20 +190,27 @@ export default {
 }
 .my-card {
   min-width: 10rem;
-  min-height: 10rem;
+  min-height: 10.5rem;
   width: 100%;
-  transition: 1s;
   position: relative;
+  transition: all 0.4s ease-in-out;
+}
+
+.top {
+  height: 60%;
+}
+.recipeName {
+  font-size: 0.9rem;
 }
 
 .nameRecipe {
-  top: 0;
-  height: 30%;
-  margin: 0;
+  /* height: 2.2rem;
+  line-height: 1.1rem; */
+
   width: 100%;
-  font-size: 1.1rem;
-  position: absolute;
-  color: whitesmoke;
+  font-size: 0.95rem;
+  top: 0.5rem;
+  color: rgb(0, 0, 0);
 }
 
 .btn-pos {
@@ -153,38 +220,27 @@ export default {
 }
 
 .card__overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 42%;
+  padding: 1em;
+  min-height: 7rem;
   width: 100%;
-  opacity: 0;
-  visibility: none;
+  opacity: 1;
+  background: #ffde00;
+  /* background-image: linear-gradient(120deg, #FFDE00 0%, rgb(253, 225, 68) 100%); */
   transition: 0.5s ease;
-  z-index: 99999;
 }
 
-.my-card:hover .card__overlay {
-  /* background-color: #cc6008a8; */
-  background-image: linear-gradient(120deg, #f6d465df 0%, #fd9f85e5 100%);
-  opacity: 1;
+.my-card:hover .img-box {
+  filter: brightness(100%);
+  transition: all 0.5s ease-in;
 }
 .my-card:hover .color_overlay {
-  opacity: 0.3;
-}
-
-.color_overlay:hover .card__overlay {
-  opacity: 1;
-}
-.color_overlay:hover {
   opacity: 0;
 }
 
 .my-card:hover {
-  box-shadow: 0 1px 20px 0 rgba(253, 171, 64, 0.24),
-    0 10px 20px 0 rgba(255, 158, 47, 0.19);
-  background-color: #9454007a; /* Green */
+  box-shadow: 0 1px 15px 0 rgba(255, 251, 32, 0.692);
+  background-color: #9454007a;
+
   color: white;
   cursor: pointer;
   transition: all 300ms;
@@ -193,17 +249,43 @@ export default {
 
 .color_overlay {
   position: absolute;
-  left: 0;
+
   top: 0;
   width: 100%;
   height: 100%;
-  z-index: 90000;
-  opacity: 0;
-}
 
-.color_overlay {
+  z-index: 1;
+  opacity: 0.2;
   background-color: rgb(3, 3, 3);
   transition: 0.5s ease;
   mix-blend-mode: multiply;
+}
+
+.img-box {
+  filter: brightness(80%);
+  transition: all 0.5s ease-in;
+}
+
+.text-overflow-handle {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+
+
+.q-img__content > div {
+    height: 3.8rem;
+    overflow: hidden;
+    position: absolute;
+    padding: 0.8rem;
+    color: #fff;
+        line-height: 1.6rem;
+    background: rgba(0, 0, 0, 0.47);
+}
+
+.text-h6 {
+    font-weight: 500;
+    letter-spacing: 0.02em;
 }
 </style>

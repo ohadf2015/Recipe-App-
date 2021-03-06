@@ -2,10 +2,10 @@
     <div class="auto-tabs">
       <br>
       <div class="row q-gutter-mb-xs flex-center " >
-        <q-input rounded standout="text-light " inverted-light  bg-color="black"  v-model.trim="searchCategory" label="Search"  color="orange" style="width:35%">
+        <q-input class="q-mt-lg" rounded standout bg-color="blue-grey-9" v-model.trim="searchCategory" label="Search" label-color="warning" color="white" style="width:35%">
           
             <template v-slot:prepend>
-            <q-icon color="orange" name="search"/>
+            <q-icon color="warning" name="search"/>
             </template>
         </q-input>
       </div>
@@ -13,7 +13,7 @@
       <br>
       <div class="row q-mb-md">
         <q-banner class="bg-black text-white col flex">
-          <h5 style="text-align:center">Choose at least <strong style="color:orange">3</strong> categories you like</h5>
+          <h5 style="text-align:center">Choose at least <strong style="color:yellow">3</strong> categories you like</h5>
         </q-banner>
       </div>
       <q-form @submit.prevent="onSubmit">
@@ -39,7 +39,7 @@
         <div class="row q-mb-md">
           <q-btn v-if="checked_categories.length>2" class="col q-gutter-mb-xs flex-center "
                   text-color="black"
-                  color="yellow-10"
+                  color="warning"
                   icon-right="beenhere"
                   label="submit"
                   type="submit"
@@ -80,7 +80,6 @@ export default {
       this.fetchCat();
     },
     beforeUpdate() {
-      //console.log(JSON.stringify(this.$route))
     },
     methods:{
         async fetchCat(){
@@ -89,7 +88,6 @@ export default {
           
                 this.hascatego = true;
             }catch (err){
-              console.log(err)
                 throw err.message;
             }
         },
@@ -99,7 +97,6 @@ export default {
       async onSubmit () {
         const up = await this.$store.dispatch('updateCategories', {id:this.getUserId,
         updateCat: this.checked_categories})
-        console.log(up)
       if (!up.success) {
         this.$q.notify({
           color: 'red-5',
@@ -124,6 +121,9 @@ export default {
 }
 </script>
 <style scoped>
+h5{
+  font-size: 2rem;
+}
 .auto-tabs {
     max-width: 45%;
     margin: 0 auto;
@@ -131,11 +131,11 @@ export default {
 .q-input{
   position: fixed;
   z-index: 30;
-  width: 15%;
+  width: 100%;
   color:white
 }
 label.sem {
-  border: 4px solid orange;
+  border: 4px solid rgb(255, 218, 7);
   border-radius: 50%;
  
 }
@@ -144,25 +144,32 @@ label.sem {
   position: relative;
   overflow: hidden;
   cursor: pointer;
+    transition:all 300ms ease-in-out;
 }
+
+
+
 .checkinput:checked ~.sem>.sem{
-  background-color: rgba(236, 166, 36, 0.5);
-   transition: 300ms ease;
+
+ transition:all 300ms ease-in-out;
+   background-image:linear-gradient(to bottom, rgba(255, 218, 9, 0.137), rgba(255, 204, 35, 0.603));
+  /* background-color: rgba(246, 209, 0, 0.274); */
+  
 }
 .sem:hover{
-   background-color: rgba(236, 166, 36, 0.171);
-   box-shadow: 0 1px 10px 0 rgba(253, 171, 64, 0.24),
-    0 10px 20px 0 rgba(255, 158, 47, 0.19);
+   background-color: rgba(243, 210, 24, 0.171);
+   box-shadow: 0 1px 20px 0 rgba(248, 233, 19, 0.24);
   color: white;
   transition: all 300ms ease;
   transform: scale(1.01, 1.01);
 
 }
 .sem{
-  transition: 500ms ease;
+  transition:all 500ms ease-in-out;
 }
 
 .FillParent {
+  
   display: block;
   position: absolute;
   top: -2px;
@@ -173,7 +180,7 @@ label.sem {
 .q-btn{
   position: fixed;
   right:30%;
-  bottom: 0px;
+  bottom: 0.3rem;
   z-index: 30;
   width: 40%;
   padding:0px 5px 0px 10px

@@ -1,10 +1,10 @@
 <template>
   <div class="auto-tabs">
     <div class="flex flex-center">
-      <img src="~/assets/logo.png" width="150px" height="150px"/>
+    <img class="q-mt-lg" src="~/assets/logoSyr.png" width="150px" height="150px" />
     </div>
     <div class="flex flex-center">
-      <h4 class="text-orange-6">Register</h4>
+      <h4 class="warning">Register</h4>
     </div>
   <q-form @submit.prevent="onSubmit" @reset="onReset">
     <div class="row q-mb-md">
@@ -20,13 +20,13 @@
               dark
               color="grey-3"
               class="col "
-              label-color="orange"
+              label-color="warning"
               v-model.trim="registerForm.fullName"
               label="Full Name"
                ref="fullName"
                lazy-rules>
               <template v-slot:prepend>
-              <q-icon name="face" color="orange" />
+              <q-icon name="face" color="warning" />
               </template>
       </q-input>
     </div>
@@ -36,13 +36,13 @@
                 dark
                 color="grey-3"
                 class="col"
-                label-color="orange"
+                label-color="warning"
                 v-model.trim="registerForm.email"
                 label="Email"
                 ref="email"
                 lazy-rules>
                 <template v-slot:prepend>
-                <q-icon name="mail" color="orange" />
+                <q-icon name="mail" color="warning" />
                 </template>
       </q-input>
     </div>
@@ -52,7 +52,7 @@
                 dark
                 color="grey-3"
                 class="flex flex-center col"
-                label-color="orange"
+                label-color="warning"
                 v-model.trim="registerForm.password"
                 label="Password"
                 :type="registerForm.isPwd ? 'password' : 'text'"
@@ -60,7 +60,7 @@
                 lazy-rules>
                 <template v-slot:prepend>
                 <q-icon
-                  name="lock" color="orange"/>
+                  name="lock" color="warning"/>
                 </template>
                 <template
                   v-slot:append>
@@ -77,14 +77,14 @@
                 dark
                 color="grey-3"
                 class="bg-1 col"
-                label-color="orange"
+                label-color="warning"
                 v-model.trim="registerForm.repPassword"
                 :type="registerForm.isPwd2 ? 'password' : 'text'"
                 label="Repeat Password"
                 ref="repPassword"
                 lazy-rules>
                 <template v-slot:prepend>
-                    <q-icon name="lock" color="orange"/>
+                    <q-icon name="lock" color="warning"/>
                     </template>
                     <template
                     v-slot:append>
@@ -96,38 +96,40 @@
       </q-input>
     </div>
      <!-- accept terms -->
-    <q-toggle
+    <!-- <q-toggle
               v-model="registerForm.accept"
               dark
-              color="orange"
-              class="text-orange col"
-              label-color="orange"
+              color="warning"
+              class=""
+              label-color="black"
               ref="accept"
-             label="I accept the license and terms" />
-    <div class="row q-mb-md">
+             label="I accept the license and terms" /> -->
+    <div class="row ">
        <q-btn
+       id="submit"
+       text-color="black"
                 class="col"
-                color="orange"
+                color="warning"
                 label="Register"
                 type="submit" />
         
     </div>
-     <div class="row q-mb-md">
+     <div class="row ">
     <q-btn
                 label="Reset"
                 type="reset"
-                color="orange"
+                color="white"
                 flat
                 class="col shadow-up-6" />
      </div>
      
     </q-form>
     <div class="auto-tabs">
-    <div class="row q-mb-md">
+    <div class="row ">
      <q-btn
         class="col"
         color="black"
-        text-color="orange"
+        text-color="warning"
         unelevated
         to="/"
         label="Back to Login Page"
@@ -150,7 +152,7 @@ export default {
         repPassword: '',
         isPwd: true,
         isPwd2: true,
-        accept: false
+        accept: true
       }
     }
   },
@@ -246,10 +248,19 @@ this.$router.replace('/');
 .q-input {
     padding: 5px 25px
 }
-button{
-    margin:15px 25px;
+
+
+.q-btn {
+  margin: auto;
+  margin-bottom:1rem;
+  margin-top:1.2rem;
+font-size: 1rem;
+ width: 90%;
+ 
+  text-transform: lowercase !important;
 }
-.q-toggle{
-  padding: 10px 15px ;
+
+#submit{
+   font-size:1.2rem;
 }
 </style>

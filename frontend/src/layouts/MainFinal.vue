@@ -3,16 +3,20 @@
   <q-layout view="lHh LpR lfr">
 <!-- Header -->
 <div class="auto-style">
-    <q-header class="header" elevated>
-      <q-toolbar class="bg-black-10 col-md-4">
-<!-- Search - available in search component -->    
+    <q-header class="header" elevated  v-if="($route.path == '/main'||$route.path == '/myRecipes')">
+      <q-toolbar class="bg-black-10 col-md-4" >
+<!-- Search - available in search component --> 
+
           <search/>
+
+          <div class="q-ml-md text-h6 text-warning text-center">Hi {{getUserName}}</div>   
+
           <!-- Menu  -->
           <div class="q-pa-md">
               <div class="q-gutter-md">
-                <q-btn color="orange-8" style="width: 3rem;" icon="menu">
+                <!-- <q-btn color="warning" style="width: 3rem;" icon="menu" v-if="windowWidth<750">
                   <q-menu fit>
-                    <q-list class="auto-style" style="min-width: 300px">
+                    <q-list class="auto-style" style="min-width: 12.5rem">
                       <q-item
                       v-for="page in menu"
                       :key="page.id"
@@ -21,28 +25,28 @@
                       clickable>
                         <q-item-section>{{ page.label }}</q-item-section>
                           <q-item-section avatar>
-                            <q-icon color="orange" :name="page.icon" />
+                            <q-icon color="warning" :name="page.icon" />
                             </q-item-section>
                       </q-item>
                     </q-list>
                   </q-menu>
-                </q-btn>
+                </q-btn> -->
               </div>
           </div>
 <!-- Main page btn -->
       </q-toolbar>
     </q-header>
 <!-- Footer Navigation - when screen px under 768 (Cellphones only) -->
-    <q-footer class="flex flex-center">
+    <q-footer class="flex flex-center fixed-bottom">
       <q-tabs>
         <q-route-tab
           v-for="nav in navigation"
           :key="nav.label"
           :to="nav.to"
           :icon="nav.icon"
-          :label="nav.label"
+          :label="nav.label.toLowerCase()"
           class="q-mt-xs"
-          text-color="orange-8"
+          text-color="warning"
           color="bg-black"
           unelevated />
       </q-tabs>
@@ -58,7 +62,7 @@
     >
    
     <q-item
-    to="/main"
+    @click="$router.push('/main')"
     clickable class="q-m-none">
      <q-img
           class="flex flex-center"
@@ -71,10 +75,35 @@
           class="text-grey-4 q-mt-xl"
           exact
           clickable
-          @click="$router.push('myRecipes')"> 
+          @click="$router.push('/myRecipes')"> 
        
           <q-item-section class="text-center">
-             <q-icon name="o_book" style="font-size: 4.4em;" color="orange" />
+             <q-icon class="menu-btn" name="o_bookmarks" color="warning" text-color="black"/>
+            <p class="subtitle" color="warning">Favorites</p>
+          </q-item-section>
+        </q-item>
+
+
+              <q-item 
+          class="text-grey-4 q-mt-xl"
+          exact
+          clickable
+          @click="$router.push('/categories')"> 
+       
+          <q-item-section class="text-center">
+             <q-icon name="o_category" class="menu-btn" color="warning" />
+           <p class="subtitle" color="warning">Categories</p>
+          </q-item-section>
+        </q-item>
+              <q-item 
+          class="text-grey-4 q-mt-xl"
+          exact
+          clickable
+          @click="logout();$router.push('/logout')"> 
+       
+          <q-item-section class="text-center">
+             <q-icon name="o_logout" class="menu-btn" color="warning" />
+           <p class="subtitle" color="warning">Logout</p>
           </q-item-section>
         </q-item>
         <!-- <q-item
@@ -96,7 +125,7 @@
           flat
           round
           dense
-          color="orange"
+          color="warning"
           icon="clear"/>
         </q-item-section>
         </q-item> -->
@@ -110,72 +139,61 @@
 </template>
 
 <script>
-import { openURL } from 'quasar'
-
+import { openURL } from 'quasar';
+import { mapGetters } from "vuex";
 export default {
   name: 'MainLayout',
   data () {
     return {
+      name:'',
       leftDrawerOpen: this.$q.platform.is.desktop,
       search: '',
+      windowWidth:window.innerWidth,
       menu: [
         {
           id: 0,
-          label: 'Home',
+          label: 'home',
           icon: 'home',
           to: '/main'
         },
         {
           id: 1,
-          label: 'My Recipes',
-          icon: 'favorite',
+          label: 'favorites',
+          icon: 'o_bookmarks',
           to: '/myRecipes'
         },
         {
           id: 2,
           label: 'Log Out',
           icon: 'logout',
-          to: '/'
+          to: '/logout'
         },
-        {
-          id: 3,
-          label: 'Help & Feedback',
-          icon: 'help',
-          to: '/helpAndFeedback'
-        }
+        // {
+        //   id: 3,
+        //   label: 'Help & Feedback',
+        //   icon: 'help',
+        //   to: '/helpAndFeedback'
+        // }
       ],
-      myFavoriveRecipes: [
-        {
-          id: 1,
-          label: 'Best Waffels',
-          icon: 'local_dining',
-          to: '/myRecipes'
-        },
-        {
-          id: 2,
-          label: 'Best Italian Homemade Pizza',
-          icon: 'local_dining',
-          to: '/myRecipes'
-        }
-      ],
+  
       navigation: [
         {
           id: 1,
-          label: 'My Recipes',
-          icon: 'favorite',
-          to: '/myRecipes'
+          label: 'Favorites',
+          icon: 'o_bookmarks',
+          to: 'myRecipes'
         },
          {
           id: 2,
           label: 'Home',
           icon: 'home',
-          to: '/main'
+          to: 'main'
         },
         {
           id: 3,
           label: 'Logout',
           icon: 'logout',
-          to: '/'
+          to: '/logout' 
         }
       ]
     }
@@ -183,23 +201,24 @@ export default {
   components: {
     search: require('components/search.vue').default
   },
+  mounted(){
+      this.$nextTick(() => {
+      window.addEventListener('resize', this.onResize);
+    })
+  },
+  computed:{
+   ...mapGetters(["getUserName"]),
+  },
   methods: {
     openURL,
-    promptToDelete (id) {
-      this.$q.dialog({
-        title: 'Do you really want to delete this item?',
-        massage: 'Do you really want to delete this item?',
-        ok: {
-          push: true
-        },
-        cancel: {
-          color: 'negative'
-        },
-        persistent: true
-      }).onOk(() => {
-        console.log('deleted')
-      })
+       onResize() {
+      this.windowWidth = window.innerWidth
+    },
+    logout(){
+      this.$store.dispatch('logout')
     }
+
+  
   }
 }
 </script>
@@ -212,22 +231,57 @@ export default {
   }
   .q-drawer {
     .q-router-link--exact-active {
-      color: #c18523 !important;
+      color: #ffd82c !important;
 
     }
   }
+
+
+  .q-tab{
+    text-transform:lowercase !important;
+  }
+
+  .q-tab--full {
+    min-height: 4rem;
+}
   .border-left{
       border-left: linear-gradient(90deg, #f6d365 0%, #fda085 100%);
 
+  }
+  .menu-btn{
+font-size: 3.5rem;
+  margin: 0;
+  margin-left: 0.7rem;
   }
   .auto-style {
     font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     margin: auto;
   }
+  .q-footer{
+    position: fixed !important;
+      background-image: linear-gradient(120deg, #424242 0%, #201d1c 100%);
+    
+      opacity: 0.96;
+  }
   .header {
-    z-index: 9999999999;
+    z-index: 999999;
     height: 100px;
     margin: auto;
     padding: 20px;
   }
+  .subtitle{
+    margin: 0;
+    margin-top:0.6rem;
+    font-size: 1.1rem;
+  }
+  .q-menu{
+   
+    z-index: 999999;
+  }
+
+
+  body.body--dark {
+    color: #fff;
+    background: #050503 ;
+}
 </style>

@@ -12,7 +12,7 @@ const cookiep = require('cookie-parser');
 const errorHandler = require('./middleware/error');
 const connectMongo = require('./config/db');
 const preventInjection = require('express-mongo-sanitize');
-
+const createRecommendations=require('./controllers/userData').createRecommendations
 
 
 
@@ -37,6 +37,7 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 const server = app.listen(PORT, () => {
     console.log(colors.blue.bold.underline(`Server Running on Port ${process.env.NODE_ENV} mode on port ${PORT}!`))
+     createRecommendations()
 });
 process.on('unhandledRejection', (err, promise) => {
     console.log(colors.red(`WE HAVE An ERROR! :( => ${err.message}`));

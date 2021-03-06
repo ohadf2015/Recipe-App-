@@ -14,9 +14,10 @@
     "@quasar/extras": "^1.0.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "lodash": "^4.17.20",
     "lottie-vuejs": "^0.1.0",
     "lottie-web": "^5.7.6",
-    "quasar": "^1.0.0",
+    "quasar": "^1.14.7",
     "vue-lottie": "^0.2.1",
     "vue3-carousel": "^0.1.10"
   },

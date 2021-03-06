@@ -5,9 +5,7 @@ const crypto = require('crypto');
 const autoIncrement = require('mongoose-auto-increment');
 autoIncrement.initialize(mongoose.connection)
 const userSchema = new mongoose.Schema({
-    recommandationId:{
-        type:Number
-    },
+  
     fullname: {
         type: String,
         required: [true, 'Please enter your name!']
@@ -37,6 +35,14 @@ const userSchema = new mongoose.Schema({
         minlength: 8,
         select: false,
     },
+    recommandationId: {
+        type: Number
+    },
+    dateRecommendations: {
+        type: Date,
+        default: null
+    }
+    ,
     resetPassToken: String,
     resetpassExpire: Date,
     createpass: {
@@ -55,26 +61,26 @@ userSchema.plugin(autoIncrement.plugin, {
     incrementBy: 1
 });
 
-userSchema.pre('save', async function(next) {
-console.log(this)
+userSchema.pre('save', async function (next) {
+    console.log(this)
     if (!this.isModified('password')) {
         next();
     }
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
- 
+
 });
 //sign JWT
-userSchema.methods.getSignedJwtToken = function() {
+userSchema.methods.getSignedJwtToken = function () {
     return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRE
     })
 }
-userSchema.methods.matchPass = async function(p) {
+userSchema.methods.matchPass = async function (p) {
     return await bcrypt.compare(p, this.password);
 
 }
-userSchema.methods.getResetPassTok = function() {
+userSchema.methods.getResetPassTok = function () {
     const resetTok = crypto.randomBytes(20).toString('hex');
     this.resetPassToken = crypto.createHash('sha256').update(resetTok).digest('hex');
     this.resetpassExpire = Date.now() + 10 * 60 * 1000;
