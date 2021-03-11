@@ -15,8 +15,15 @@ exports.getAllRecs = async (req, res, next) => {
 exports.getRecsById = async (id) => {
   try {
     const recommendations = await recsModel.findOne({userId:id});
-    return recommendations.recommendations
+    if (recommendations){
+
+      return recommendations.recommendations
+    }
+    else{
+      return []
+    }
   } catch (err) {
+    throw err
     //res.status(400).json({ success: false });
 console.log(err)
   }
